@@ -5,7 +5,7 @@ import Genres from '../Genres';
 
 import './Card.css';
 
-const Card  = ({title, overview, date, posterUrl})  => (
+const Card  = ({title, overview, date, posterUrl, genre})  => (
 
 	<div className="card">
 		<div className="img">
@@ -16,20 +16,24 @@ const Card  = ({title, overview, date, posterUrl})  => (
 		<div className="content">
 			<div className="title">{ title }</div>
 			<div>{ date }</div>
-			{/* <div className="genre">{ 'button1' } { 'button2' }</div> */}
-			<Genres />
+			<Genres genre={genre}/>
 			<p>{ overview }</p>
 		</div>
 	</div>
 
     );
 
-export default Card;
+Card.defaultProps = {
+	genre: [10770],
+};
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
   overview: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  posterUrl: PropTypes.string.isRequired,
+	posterUrl: PropTypes.string.isRequired,
+	genre: PropTypes.arrayOf(PropTypes.number),
   
 };
+
+export default Card;

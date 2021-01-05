@@ -77,13 +77,14 @@ export default class Main extends Component{
 	render () {
 		const { data, loading, error, totalPages } = this.state;
 		const elements = data.map((item) => {
-			const { id, title, overview, date, img } = item;
+			const { id, title, overview, date, img, genre } = item;
 			let posterUrl = '';
 			if (img) posterUrl = img;
 			return(
 				<Card
 					key={id}
 					title={title}
+					genre={genre}
 					overview={overview}
 					date={date}
 					posterUrl={posterUrl}

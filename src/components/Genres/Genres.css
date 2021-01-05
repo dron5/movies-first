@@ -1,0 +1,13 @@
+.genres{
+  font-size: 12px;
+  line-height: 12px;
+  border-radius: 3px;
+  border: 1px solid rgb(146, 120, 120);
+  padding-left: 3px;
+  padding-right: 3px;
+  margin-right: 2px;
+  outline: none;
+}
+.genres:hover{
+  cursor: pointer;
+}
