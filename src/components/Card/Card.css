@@ -1,0 +1,45 @@
+.card {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 454px;
+    height: 278px;
+    margin-top: 12px;
+    margin-bottom: 14px;
+    margin-left: 30px;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 245, .2);
+}
+.img {
+    width: 185px;
+    height: 100%;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+.content p {
+    overflow:hidden;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+.title {
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.genre {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
