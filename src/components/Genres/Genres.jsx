@@ -2,21 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import { Button } from 'antd';
-
 import './Genres.css';
 
 const Genres = ({ genre }) => {
-  const genres = {
-    '0': 'No genres',
-    '16': 'Animation',
-    '35': 'Comedy',
-    '27': 'Horror',
-    '18': 'Drama',
-    '28': 'Action',
-    '14': 'Fantasy',
-    '12': 'Adventure'
-  };
+  let genres = sessionStorage.getItem('genres');
+  genres = JSON.parse(genres);
   const part = genre.map((el,i) =>
     <button key={i} type="button" className="genres">{genres[el]}</button>);
   return (
@@ -25,7 +15,7 @@ const Genres = ({ genre }) => {
 };
 
 Genres.defaultProps = {
-  genre: [10770],
+  genre: [0],
 };
 
 Genres.propTypes = {

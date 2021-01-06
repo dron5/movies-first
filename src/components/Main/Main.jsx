@@ -27,6 +27,7 @@ export default class Main extends Component{
 
 	componentDidMount() {
 		const { word } = this.state;
+		this.searchGenres();
 		this.searchMovie(word);
 	}
 
@@ -55,6 +56,23 @@ export default class Main extends Component{
 			error: true,
 			loading: false
 		});
+	}
+
+	setSessionStorage = (genreList) => {
+		if ('genres' in sessionStorage) return;
+		const genres = {'0': 'No genre'};
+		genreList.forEach((el) => {
+			genres[el.id.toString()] = el.name;
+		});
+		sessionStorage.setItem('genres', JSON.stringify(genres));
+	}
+
+	searchGenres = () => {
+		this.movie
+			.getGenres()
+			.then((body) => {
+				this.setSessionStorage(body.genres);
+			});
 	}
 
 	searchMovie = (param,page=1) => {
