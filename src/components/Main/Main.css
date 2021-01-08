@@ -11,3 +11,7 @@ body {
     background-color: #fff;
     margin: 0 auto;
 }
+.ant-tabs-top > .ant-tabs-nav::before {
+    width: 130px;
+    left: 420px;
+}

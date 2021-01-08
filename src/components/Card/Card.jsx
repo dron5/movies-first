@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Rate } from 'antd';
+
 import Genres from '../Genres';
 
 import './Card.css';
@@ -19,6 +21,7 @@ const Card = ({ title, overview, date, posterUrl, genre }) => {
 				<div>{date}</div>
 				<Genres genre={genre} />
 				<p>{overview}</p>
+				<Rate allowHalf defaultValue={0} onChange={(num)=>console.log(num)} />
 			</div>
 		</div>
 

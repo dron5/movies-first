@@ -11,11 +11,28 @@ export default class  MovieService {
 	_apiSearch = 'search/movie?';
 	
 	_posterBaseUrl = 'http://image.tmdb.org/t/p/w185';
+	
+	_getGuestSessionId = 'authentication/guest_session/new?';
+
+	// _getSorted = `guest_session/${guestSessionId}/rated/movies?`;
+
+	async getSessionId() {
+		const answer =
+			await fetch(`${this._apiBase}${this._getGuestSessionId}${this._apiKey}`)
+			.catch(()=>console.log('Not sessionId cos Fucking error'));
+		return await answer.json();
+	}
+
+	async getRatedMovies(id) {
+		const rateds =
+			await fetch(`${this._apiBase}guest_session/${id}/rated/movies?${this._apiKey}`)
+			.catch(()=>console.log('Not rated movies cos Fucking error'));
+		return await rateds.json();
+	}
 
 	async getData(url1,url2='') {
 		const answer =
 			await fetch(`${this._apiBase}${url1}${this._apiKey}${url2}`);
-
 		if (!answer.ok) {
 			throw new Error(`Could not fetch... ${url1}` +
 			`, received ${answer.status}`);
