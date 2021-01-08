@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-fragments */
 import React, { Component, Fragment } from 'react';
 
+// import { Tabs } from 'antd';
+
 import MovieService from '../../services/MovieService';
 
 import AlertMessage from '../AlertMessage';
@@ -13,6 +15,7 @@ import 'antd/dist/antd.css';
 
 import './Main.css';
 
+// const { TabPane } = Tabs;
 export default class Main extends Component{
 
 	movie = new MovieService();
@@ -124,6 +127,29 @@ export default class Main extends Component{
 				{errorMessage}
 				<Footer setPage={this.setPage} totalPages={totalPages}/>
 			</div>
-		);
+		);	
+
+		// return (
+			
+		// 	<Fragment>
+		// 		<Tabs defaultActiveKey="1" onChange={(key)=>console.log(key)} centered size="large">
+		// 			<TabPane tab="Search" key="1">
+		// 					<div className="main">
+		// 				<Header setWord={this.setWord}/>
+		// 					{spinner}
+		// 					{cards}
+		// 					{errorMessage}
+		// 					</div>
+    // 			</TabPane>
+		// 			<TabPane tab="Rated" key="2">
+		// 				<div className="main">
+		// 					Rated movies must be here:-)
+		// 				</div>
+		// 			</TabPane>
+		// 		</Tabs> 
+		// 		<Footer setPage={this.setPage} totalPages={totalPages} />
+		// 		</Fragment>
+			
+		// );
 	};
 }
