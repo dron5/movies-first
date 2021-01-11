@@ -29,7 +29,7 @@ export default class Main extends Component{
 		const { word } = this.state;
 		this.searchGenres();
 		this.searchMovie(word);
-		this.getId();
+		this.setGuestId();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -37,7 +37,7 @@ export default class Main extends Component{
 		if (word !== prevState.word) this.searchMovie(word);
 	}
 	
-	getId = () => {
+	setGuestId = () => {
 		if (sessionStorage.getItem('guestId') !== null) return;
 		this.movie
 			.getSessionId()
@@ -112,6 +112,7 @@ export default class Main extends Component{
 			return(
 				<Card
 					key={id}
+					id={id}
 					title={title}
 					genre={genre}
 					overview={overview}

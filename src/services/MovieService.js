@@ -14,8 +14,31 @@ export default class  MovieService {
 	
 	_getGuestSessionId = 'authentication/guest_session/new?';
 
-	// _getSorted = `guest_session/${guestSessionId}/rated/movies?`;
+	rateMovie = async (movieId, voteNum, GSId) => {
+		let json = { "value": voteNum };
+		json = JSON.stringify(json);
+		await fetch(`${this._apiBase}movie/${movieId}/rating?${this._apiKey} \
+			&guest_session_id=${GSId}`,
+			{
+				method: 'post',
+				headers: {  
+      		"Content-Type": "application/json; charset=utf-8"  
+				},
+				body: json,
+			})
+			.then((body) => {
+				if (body.ok) {
+					console.log('Status OK');
+				}else {console.log(body.status, GSId, movieId);}
+			});
+	}
 
+	getGSId = () => {
+		let guestSessionId = sessionStorage.getItem('guestId');
+		guestSessionId = JSON.parse(guestSessionId);
+		return guestSessionId;
+	}
+	
 	async getSessionId() {
 		const answer =
 			await fetch(`${this._apiBase}${this._getGuestSessionId}${this._apiKey}`)
@@ -26,7 +49,7 @@ export default class  MovieService {
 	async getRatedMovies(id) {
 		const rateds =
 			await fetch(`${this._apiBase}guest_session/${id}/rated/movies?${this._apiKey}`)
-			.catch(()=>console.log('Not rated movies cos Fucking error'));
+				.catch(() => console.log('Not rated movies cos Fucking error'));
 		return await rateds.json();
 	}
 

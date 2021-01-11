@@ -3,12 +3,20 @@ import PropTypes from 'prop-types';
 
 import { Rate } from 'antd';
 
+import MovieService from '../../services/MovieService';
+
 import Genres from '../Genres';
 
 import './Card.css';
 
-const Card = ({ title, overview, date, posterUrl, genre }) => {
+const movieService = new MovieService();
+
+const { getGSId, rateMovie } = movieService;
+
+const Card = ({ title, overview, date, posterUrl, genre, id }) => {
+	const guestId = getGSId();
 	const basePosterUrl = 'http://image.tmdb.org/t/p/w185';
+	// img onError
 	return (
 		<div className="card">
 			<div className="img">
@@ -21,7 +29,7 @@ const Card = ({ title, overview, date, posterUrl, genre }) => {
 				<div>{date}</div>
 				<Genres genre={genre} />
 				<p>{overview}</p>
-				<Rate allowHalf defaultValue={0} onChange={(num)=>console.log(num)} />
+				<Rate allowHalf defaultValue={0} onChange={(num)=>rateMovie(id, num, guestId)} />
 			</div>
 		</div>
 
@@ -33,12 +41,12 @@ Card.defaultProps = {
 };
 
 Card.propTypes = {
+	id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   overview: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
 	posterUrl: PropTypes.string.isRequired,
 	genre: PropTypes.arrayOf(PropTypes.number),
-  
 };
 
 export default Card;
