@@ -11,10 +11,9 @@ import './Card.css';
 
 const movieService = new MovieService();
 
-const { getGSId, rateMovie } = movieService;
+const { rateMovie } = movieService;
 
-const Card = ({ title, overview, date, posterUrl, genre, id }) => {
-	const guestId = getGSId();
+const Card = ({ title, overview, date, posterUrl, genre, id, guestId }) => {
 	const basePosterUrl = 'http://image.tmdb.org/t/p/w185';
 	// img onError
 	return (
@@ -47,6 +46,7 @@ Card.propTypes = {
   date: PropTypes.string.isRequired,
 	posterUrl: PropTypes.string.isRequired,
 	genre: PropTypes.arrayOf(PropTypes.number),
+	guestId: PropTypes.string.isRequired,
 };
 
 export default Card;

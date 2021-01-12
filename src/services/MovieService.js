@@ -17,8 +17,7 @@ export default class  MovieService {
 	rateMovie = async (movieId, voteNum, GSId) => {
 		let json = { "value": voteNum };
 		json = JSON.stringify(json);
-		await fetch(`${this._apiBase}movie/${movieId}/rating?${this._apiKey} \
-			&guest_session_id=${GSId}`,
+		await fetch(`${this._apiBase}movie/${movieId}/rating?${this._apiKey}&guest_session_id=${GSId}`,
 			{
 				method: 'post',
 				headers: {  
@@ -32,17 +31,11 @@ export default class  MovieService {
 				}else {console.log(body.status, GSId, movieId);}
 			});
 	}
-
-	getGSId = () => {
-		let guestSessionId = sessionStorage.getItem('guestId');
-		guestSessionId = JSON.parse(guestSessionId);
-		return guestSessionId;
-	}
 	
 	async getSessionId() {
 		const answer =
-			await fetch(`${this._apiBase}${this._getGuestSessionId}${this._apiKey}`)
-			.catch(()=>console.log('Not sessionId cos Fucking error'));
+			await fetch(`${this._apiBase}${this._getGuestSessionId}${this._apiKey}`)	
+				.catch(()=>console.log('Not sessionId cos Fucking error'));
 		return await answer.json();
 	}
 

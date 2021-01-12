@@ -23,6 +23,7 @@ export default class Main extends Component{
 		error: false,
 		totalPages: 0,
 		word: 'return',
+		guestId: '',
 	}
 
 	componentDidMount() {
@@ -38,15 +39,25 @@ export default class Main extends Component{
 	}
 	
 	setGuestId = () => {
-		if (sessionStorage.getItem('guestId') !== null) return;
-		this.movie
-			.getSessionId()
-			.then((body) => {
-				sessionStorage.setItem('guestId',
-					JSON.stringify(body.guest_session_id));
-			});
+		if (sessionStorage.getItem('guestId') === null) {
+			this.movie
+				.getSessionId()
+				.then((body) => {
+					this.setState(() => ({
+						guestId: body.guest_session_id,
+					}));
+					sessionStorage.setItem('guestId',
+						JSON.stringify(body.guest_session_id));
+				});
+		} else {
+				let guestSessionId = sessionStorage.getItem('guestId');
+				guestSessionId = JSON.parse(guestSessionId);
+				this.setState(() => ({
+					guestId: guestSessionId
+			}));
+		}
 	}
-
+	
 	setWord = (name) => {
 		const value = name.trim();
 		if (!value) return;
@@ -104,7 +115,7 @@ export default class Main extends Component{
 	}
 	
 	render () {
-		const { data, loading, error, totalPages } = this.state;
+		const { data, loading, error, totalPages, guestId } = this.state;
 		const elements = data.map((item) => {
 			const { id, title, overview, date, img, genre } = item;
 			let posterUrl = '';
@@ -113,6 +124,7 @@ export default class Main extends Component{
 				<Card
 					key={id}
 					id={id}
+					guestId={guestId}
 					title={title}
 					genre={genre}
 					overview={overview}
