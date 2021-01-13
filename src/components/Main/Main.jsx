@@ -117,13 +117,14 @@ export default class Main extends Component{
 	render () {
 		const { data, loading, error, totalPages, guestId } = this.state;
 		const elements = data.map((item) => {
-			const { id, title, overview, date, img, genre } = item;
+			const { id, title, overview, date, img, genre, vote } = item;
 			let posterUrl = '';
 			if (img) posterUrl = img;
 			return(
 				<Card
 					key={id}
 					id={id}
+					vote={vote}
 					guestId={guestId}
 					title={title}
 					genre={genre}

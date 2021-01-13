@@ -62,7 +62,7 @@ export default class  MovieService {
 			moviesData.push({id: el.id, title: el.title,
 				img: el.poster_path, overview: el.overview,
 				genre: el.genre_ids, date: el.release_date,
-				vote: el.vote_average});
+				vote: el.vote_average, });
 		});
 		const data = {
 			results: moviesData,

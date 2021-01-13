@@ -4,20 +4,19 @@ import PropTypes from 'prop-types';
 import Footer from '../Footer';
 import Card from '../Card';
 
-const setPage = (key) => console.log(key);
-const totalPages = 1;
+const setPage = (key) => key;
 
-const Rated = ({ data }) => {
+const Rated = ({ data, totalPages }) => {
   const elements = data.map((item) => {
-    const { id, title, overview, date, img, genre } = item;
+    const { id, title, overview, date, img, genre, vote } = item;
 		let posterUrl = '';
     if (img) posterUrl = img;
     return (
       <Card
 					key={id}
-          id={id}
+          flag={1}
+          vote={vote}
 					title={title}
-          guestId={" "}
 					genre={genre}
 					overview={overview}
 					date={date}
@@ -37,11 +36,13 @@ const Rated = ({ data }) => {
 };
 
 Rated.defaultProps = {
-	data: [0],
+  data: [0],
+  totalPages: 0,
 };
 
 Rated.propTypes = {
-	data: PropTypes.arrayOf(PropTypes.arrayOf),
+  data: PropTypes.arrayOf(PropTypes.arrayOf),
+  totalPages: PropTypes.number,
 };
 
 export default Rated;

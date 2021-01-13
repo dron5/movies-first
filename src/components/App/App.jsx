@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable import/no-useless-path-segments */
-import React, { Component,Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import { Tabs } from 'antd';
 
 import MovieService from '../../services/MovieService';
+// import { MovieServiceProvider } from '../MovieServiceContext';
 
 import Main from '../Main';
 import Rated from '../Rated';
@@ -19,7 +20,7 @@ export default class App extends Component {
   
   state = {
     data: [],
-    // totalPages: 0,
+    totalPages: 0,
   }
 
   getRated = (key) => {
@@ -39,7 +40,8 @@ export default class App extends Component {
             });
           });
           this.setState(() => ({
-            data: moviesData
+            data: moviesData,
+            totalPages: body.total_pages,
           }));
         });
     }
@@ -47,7 +49,7 @@ export default class App extends Component {
 
   
     render() {
-      const { data } = this.state;
+      const { data, totalPages } = this.state;
       return (
         <div className="main">
           <Fragment>
@@ -55,12 +57,14 @@ export default class App extends Component {
               defaultActiveKey="1"
               onChange={this.getRated}
               centered size="large">
+              {/* <MovieServiceProvider value={this.movie}> */}
                 <TabPane tab="Search" key="1">
                   <Main /> 
                 </TabPane>
                 <TabPane tab="Rated" key="2">
-                <Rated data={data}/>
+                <Rated data={data} totalPages={totalPages} />
                 </TabPane>
+              {/* </MovieServiceProvider> */}
             </Tabs> 
           </Fragment>
         </div>
