@@ -2,6 +2,7 @@
 import React, { Component, Fragment } from 'react';
 
 import MovieService from '../../services/MovieService';
+import { MovieServiceConsumer } from '../MovieServiceContext';
 
 import AlertMessage from '../AlertMessage';
 import Card from '../Card';
@@ -23,39 +24,17 @@ export default class Main extends Component{
 		error: false,
 		totalPages: 0,
 		word: 'return',
-		guestId: '',
 	}
 
 	componentDidMount() {
 		const { word } = this.state;
 		this.searchGenres();
 		this.searchMovie(word);
-		this.setGuestId();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 		const { word } = this.state;
 		if (word !== prevState.word) this.searchMovie(word);
-	}
-	
-	setGuestId = () => {
-		if (sessionStorage.getItem('guestId') === null) {
-			this.movie
-				.getSessionId()
-				.then((body) => {
-					this.setState(() => ({
-						guestId: body.guest_session_id,
-					}));
-					sessionStorage.setItem('guestId',
-						JSON.stringify(body.guest_session_id));
-				});
-		} else {
-				let guestSessionId = sessionStorage.getItem('guestId');
-				guestSessionId = JSON.parse(guestSessionId);
-				this.setState(() => ({
-					guestId: guestSessionId
-			}));
-		}
 	}
 	
 	setWord = (name) => {
@@ -101,8 +80,8 @@ export default class Main extends Component{
 		this.movie
 			.getMoviesData(param, page)
 			.then((body) => {
-				if (body.length === 0) {
-					throw new Error("Ошибка!!!");
+				if (body.results.length === 0) {
+					throw new Error("По вашему запросу ничего не найдено!!!");
 				}
 				this.setState({
 					data: body.results,
@@ -115,23 +94,26 @@ export default class Main extends Component{
 	}
 	
 	render () {
-		const { data, loading, error, totalPages, guestId } = this.state;
+		const { data, loading, error, totalPages } = this.state;
 		const elements = data.map((item) => {
 			const { id, title, overview, date, img, genre, vote } = item;
 			let posterUrl = '';
 			if (img) posterUrl = img;
-			return(
-				<Card
-					key={id}
-					id={id}
-					vote={vote}
-					guestId={guestId}
-					title={title}
-					genre={genre}
-					overview={overview}
-					date={date}
-					posterUrl={posterUrl}
-				/>
+			return (
+				<MovieServiceConsumer key={id}>
+					{(guestId) =>  (
+								<Card
+									id={id}
+									vote={vote}
+									guestId={guestId}
+									title={title}
+									genre={genre}
+									overview={overview}
+									date={date}
+									posterUrl={posterUrl}
+								/>
+							)	}
+				</MovieServiceConsumer>	
 			);
 		});
 		const movies = <Fragment>{elements}</Fragment>;

@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable import/no-useless-path-segments */
 import React, { Component, Fragment } from 'react';
@@ -5,7 +6,7 @@ import React, { Component, Fragment } from 'react';
 import { Tabs } from 'antd';
 
 import MovieService from '../../services/MovieService';
-// import { MovieServiceProvider } from '../MovieServiceContext';
+import { MovieServiceProvider } from '../MovieServiceContext';
 
 import Main from '../Main';
 import Rated from '../Rated';
@@ -21,10 +22,35 @@ export default class App extends Component {
   state = {
     data: [],
     totalPages: 0,
+    guestId: '',
   }
 
+  componentDidMount() {
+		this.setGuestId();
+	}
+  
+  setGuestId = () => {
+		if (sessionStorage.getItem('guestId') === null) {
+			this.movie
+				.getSessionId()
+				.then((body) => {
+					this.setState(() => ({
+						guestId: body.guest_session_id,
+					}));
+					sessionStorage.setItem('guestId',
+						JSON.stringify(body.guest_session_id));
+				});
+		} else {
+				let guestSessionId = sessionStorage.getItem('guestId');
+				guestSessionId = JSON.parse(guestSessionId);
+				this.setState(() => ({
+					guestId: guestSessionId
+			}));
+		}
+	}
+
   getRated = (key) => {
-    if (key === '2') {
+    if (key === 'Rated') {
       let guestId = sessionStorage.getItem('guestId');
       guestId = JSON.parse(guestId);
       const moviesData = [];
@@ -47,28 +73,29 @@ export default class App extends Component {
     }
   };
 
-  
     render() {
       const { data, totalPages } = this.state;
       return (
         <div className="main">
           <Fragment>
+            <MovieServiceProvider value={this.state.guestId}>
             <Tabs
               defaultActiveKey="1"
               onChange={this.getRated}
-              centered size="large">
-              {/* <MovieServiceProvider value={this.movie}> */}
-                <TabPane tab="Search" key="1">
+              centered 
+              size="large">
+                <TabPane tab="Search" key='Search'>
                   <Main /> 
                 </TabPane>
-                <TabPane tab="Rated" key="2">
-                <Rated data={data} totalPages={totalPages} />
+                <TabPane tab="Rated" key='Rated'>
+                  <Rated data={data} totalPages={totalPages} />
                 </TabPane>
-              {/* </MovieServiceProvider> */}
-            </Tabs> 
+              </Tabs>
+            </MovieServiceProvider>
           </Fragment>
-        </div>
+        </div>  
       );
     };
 };
 
+										

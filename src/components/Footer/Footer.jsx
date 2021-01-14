@@ -8,9 +8,9 @@ import './Footer.css';
 const Footer = ({setPage, totalPages}) => (
   <div className="footer">
     <Pagination
-      // defaultCurrent={5}
       total={totalPages*10}
       onChange={setPage}
+      showSizeChanger={false}
     />
   </div>
 );

@@ -13,7 +13,7 @@ const Rated = ({ data, totalPages }) => {
     if (img) posterUrl = img;
     return (
       <Card
-					key={id}
+					key={id.toString()}
           flag={1}
           vote={vote}
 					title={title}
@@ -30,6 +30,7 @@ const Rated = ({ data, totalPages }) => {
       <Footer
         setPage={setPage}
         totalPages={totalPages}
+        showSizeChanger={false}
       />
     </div>
   );

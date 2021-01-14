@@ -16,30 +16,17 @@ const { rateMovie } = movieService;
 
 const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag }) => {
 	const basePosterUrl = 'http://image.tmdb.org/t/p/w185';
-	const rating = flag ? vote : 0;
 	let className = "";
 
-	switch (true) {
-		case (vote >= 0 && vote < 3):
-			className = "firstColor";
-			break;
-		case (vote >= 3 && vote < 5):
-			className = "secondColor";
-			break;
-		case (vote >= 5 && vote < 7):
-			className = "thirdColor";
-			break;
-		case (vote >= 7):
-			className = "fourthColor";
-			break;
-		default:
-			className = '';
-	}
+	if (vote >= 0 && vote < 3) className = "firstColor";
+	if (vote >= 3 && vote < 5) className = "secondColor";
+	if (vote >= 5 && vote < 7) className = "thirdColor";
+	if (vote >= 7) className = "fourthColor";
 
 	return (
 		<div className="card">
 			<div className="img">
-				<img src={ posterUrl ? `${basePosterUrl}${posterUrl}` : noposter}
+				<img src={ posterUrl? `${basePosterUrl}${posterUrl}`: noposter}
 					alt="poster"
 				/>
 			</div>
@@ -54,7 +41,7 @@ const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag
 				<Rate
 					allowHalf
 					count={10}
-					defaultValue={rating}
+					defaultValue={flag ? vote : 0}
 					onChange={(num) => rateMovie(id, num, guestId)}
 				/>
 			</div>

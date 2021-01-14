@@ -25,11 +25,6 @@ export default class  MovieService {
 				},
 				body: json,
 			});
-			// .then((body) => {
-			// 	if (body.ok) {
-			// 		console.log('Status OK');
-			// 	}else {console.log(body.status, GSId, movieId);}
-			// });
 	}
 	
 	async getSessionId() {
@@ -41,8 +36,7 @@ export default class  MovieService {
 
 	async getRatedMovies(id) {
 		const rateds =
-			await fetch(`${this._apiBase}guest_session/${id}/rated/movies?${this._apiKey}`)
-				.catch(() => { throw new Error('Not rated movies cos Fucking error'); });
+			await fetch(`${this._apiBase}guest_session/${id}/rated/movies?${this._apiKey}`);
 		return await rateds.json();
 	}
 
