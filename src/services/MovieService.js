@@ -20,29 +20,29 @@ export default class  MovieService {
 		await fetch(`${this._apiBase}movie/${movieId}/rating?${this._apiKey}&guest_session_id=${GSId}`,
 			{
 				method: 'post',
-				headers: {  
-      		"Content-Type": "application/json; charset=utf-8"  
+				headers: {
+					"Content-Type": "application/json; charset=utf-8"
 				},
 				body: json,
-			})
-			.then((body) => {
-				if (body.ok) {
-					console.log('Status OK');
-				}else {console.log(body.status, GSId, movieId);}
 			});
+			// .then((body) => {
+			// 	if (body.ok) {
+			// 		console.log('Status OK');
+			// 	}else {console.log(body.status, GSId, movieId);}
+			// });
 	}
 	
 	async getSessionId() {
 		const answer =
 			await fetch(`${this._apiBase}${this._getGuestSessionId}${this._apiKey}`)	
-				.catch(()=>console.log('Not sessionId cos Fucking error'));
+				.catch(() => { throw new Error('Not sessionId cos Fucking error'); });
 		return await answer.json();
 	}
 
 	async getRatedMovies(id) {
 		const rateds =
 			await fetch(`${this._apiBase}guest_session/${id}/rated/movies?${this._apiKey}`)
-				.catch(() => console.log('Not rated movies cos Fucking error'));
+				.catch(() => { throw new Error('Not rated movies cos Fucking error'); });
 		return await rateds.json();
 	}
 

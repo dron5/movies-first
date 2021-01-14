@@ -33,7 +33,7 @@ const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag
 			className = "fourthColor";
 			break;
 		default:
-			className = ''
+			className = '';
 	}
 
 	return (
