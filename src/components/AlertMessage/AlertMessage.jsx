@@ -7,11 +7,8 @@ import './AlertMessage.css';
 
 const AlertMessage = ({message}) => (
     <Alert
-      // message="Error"
-      // description="Sorry, but nothig finded on your search."
-      description={message}
+      description={message==='Failed to fetch' ? 'No internet connection' : message}
       type="error"
-      // showIcon
     />
   );
 

@@ -15,3 +15,18 @@ body {
     width: 130px;
     left: 420px;
 }
+@media screen and (max-width: 992px) {
+    .main {
+        width: 515px;
+    }
+    .ant-input {
+        width: 48.5%;
+    }
+    .footer {
+        width: 500px;
+    }
+    .ant-tabs-top > .ant-tabs-nav::before {
+    width: 130px;
+    left: 178px;
+}
+}

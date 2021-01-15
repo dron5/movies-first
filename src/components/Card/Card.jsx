@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { format } from 'date-fns';
 import { Rate } from 'antd';
 
 import MovieService from '../../services/MovieService';
@@ -22,7 +23,8 @@ const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag
 	if (vote >= 3 && vote < 5) className = "secondColor";
 	if (vote >= 5 && vote < 7) className = "thirdColor";
 	if (vote >= 7) className = "fourthColor";
-
+	const releaseDate = date === '' ? 'not release date' : format(new Date(date), 'PP');
+	
 	return (
 		<div className="card">
 			<div className="img">
@@ -35,7 +37,7 @@ const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag
 					<div className="title">{title}</div>
 					<div className={className}>{vote}</div>
 				</div>
-				<div>{date}</div>
+				<div>{releaseDate}</div>
 				<Genres genre={genre} />
 				<p>{overview}</p>
 				<Rate
