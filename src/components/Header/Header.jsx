@@ -7,7 +7,7 @@ import './Header.css';
 
 const Header = ({setWord}) => (
     <div className="header">
-    <Search setWord={setWord}/>
+      <Search setWord={setWord}/>
     </div>
 );
 

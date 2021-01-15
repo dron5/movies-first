@@ -22,6 +22,7 @@ export default class Main extends Component{
 		data: [],
 		loading: true,
 		error: false,
+		errMessage: '',
 		totalPages: 0,
 		word: 'return',
 	}
@@ -52,10 +53,12 @@ export default class Main extends Component{
 		this.searchMovie(word, page);
 	}
 
-	onError = () => {
+	onError = (message) => {
 		this.setState({
 			error: true,
-			loading: false
+			errMessage: message,
+			loading: false,
+			totalPages: 0,
 		});
 	}
 
@@ -90,11 +93,11 @@ export default class Main extends Component{
 					totalPages: body.total_pages,
 				});
 			})
-			.catch(this.onError);
+			.catch(err => this.onError(err.message));
 	}
 	
 	render () {
-		const { data, loading, error, totalPages } = this.state;
+		const { data, loading, error, totalPages, errMessage } = this.state;
 		const elements = data.map((item) => {
 			const { id, title, overview, date, img, genre, vote } = item;
 			let posterUrl = '';
@@ -119,7 +122,7 @@ export default class Main extends Component{
 		const movies = <Fragment>{elements}</Fragment>;
 		const hasData = !(loading || error);
 
-		const errorMessage = error ? <AlertMessage /> : null;
+		const errorMessage = error ? <AlertMessage message={errMessage} /> : null;
 		const spinner = loading ? <Spinner /> : null;
 		const cards = hasData ? movies : null;
 

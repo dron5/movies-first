@@ -7,7 +7,7 @@ import { Input } from 'antd';
 import './Search.css';
 
 const Search = ({ setWord }) => {
-  const debounced = debounce((event) => { setWord(event); }, 800);
+  const debounced = debounce((event) => { setWord(event); }, 900);
   return (
     <div className="input">
       <Input

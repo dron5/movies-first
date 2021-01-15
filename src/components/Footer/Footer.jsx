@@ -11,6 +11,7 @@ const Footer = ({setPage, totalPages}) => (
       total={totalPages*10}
       onChange={setPage}
       showSizeChanger={false}
+      // simple
     />
   </div>
 );

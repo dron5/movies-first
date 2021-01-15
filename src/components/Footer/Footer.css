@@ -5,6 +5,8 @@
   padding: 30px 225px 30px 225px;
   background-color: white;
 }
-.ant-pagination-prev{
-  margin-left: 100px;
-}
+
+.ant-pagination{
+  display: flex;
+  justify-content: center;
+} 
