@@ -112,7 +112,7 @@ export default class Main extends Component{
 									title={title}
 									genre={genre}
 									overview={overview}
-									date={date}
+									date={date === undefined ? '' : date}
 									posterUrl={posterUrl}
 								/>
 							)	}

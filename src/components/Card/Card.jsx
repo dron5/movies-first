@@ -23,8 +23,12 @@ const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag
 	if (vote >= 3 && vote < 5) className = "secondColor";
 	if (vote >= 5 && vote < 7) className = "thirdColor";
 	if (vote >= 7) className = "fourthColor";
-	const releaseDate = date === '' ? 'not release date' : format(new Date(date), 'PP');
 	
+	let releaseDate = 'not release date';
+	if (date) {
+		releaseDate = format(new Date(date), 'PP');
+	}
+
 	return (
 		<div className="card">
 			<div className="img">

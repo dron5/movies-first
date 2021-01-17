@@ -1,4 +1,10 @@
 @import "~antd/dist/antd.css";
+@font-face {
+  font-family: "Inter";
+  src: url("../../fonts/Inter.ttf");
+  font-style: normal;
+  /* font-weight: normal; */
+}
 .card {
     display: flex;
     flex-wrap: nowrap;
@@ -31,7 +37,8 @@
     box-sizing: border-box;
 }
 .content p {
-    font-family: Inter, sans-serif;
+    font-family: Inter;
+    font-weight: 300;
     font-size: 14px;
     line-height: 22px;
     overflow:hidden;
@@ -41,7 +48,7 @@
     -webkit-box-orient: vertical;
 }
 .title {
-    font-family: Inter, sans-serif;
+    font-family: Inter;
     max-width: 222px;
     min-width: 222px;
     font-size: 20px;
