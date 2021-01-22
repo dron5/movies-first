@@ -31,9 +31,9 @@ export default class App extends Component {
   
   setGuestId = () => {
 		if (sessionStorage.getItem('guestId') === null) {
-			this.movie
+      this.movie
 				.getSessionId()
-				.then((body) => {
+        .then((body) => {
 					this.setState(() => ({
 						guestId: body.guest_session_id,
 					}));
@@ -41,28 +41,26 @@ export default class App extends Component {
 						JSON.stringify(body.guest_session_id));
 				});
 		} else {
-				let guestSessionId = sessionStorage.getItem('guestId');
-				guestSessionId = JSON.parse(guestSessionId);
+				const guestId = JSON.parse(sessionStorage.getItem('guestId'));
 				this.setState(() => ({
-					guestId: guestSessionId
+					guestId,
 			}));
 		}
 	}
 
-  getRated = (key) => {
+	getRated = (key) => {
     if (key === 'Rated') {
-      let guestId = sessionStorage.getItem('guestId');
-      guestId = JSON.parse(guestId);
+      const guestId = JSON.parse(sessionStorage.getItem('guestId'));
       const moviesData = [];
       this.movie
         .getRatedMovies(guestId)
         .then((body) => {
-          body.results.forEach((el) => {
+					body.results.forEach((el) => {
             moviesData.push({
               id: el.id, title: el.title,
               img: el.poster_path, overview: el.overview,
               genre: el.genre_ids, date: el.release_date,
-              vote: el.vote_average
+              vote: el.vote_average, rating: el.rating
             });
           });
           this.setState(() => ({

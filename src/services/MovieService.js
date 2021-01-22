@@ -14,7 +14,7 @@ export default class  MovieService {
 	
 	_getGuestSessionId = 'authentication/guest_session/new?';
 
-	rateMovie = async (movieId, voteNum, GSId) => {
+	rateMovie = async (voteNum, movieId, GSId) => {
 		let json = { "value": voteNum };
 		json = JSON.stringify(json);
 		await fetch(`${this._apiBase}movie/${movieId}/rating?${this._apiKey}&guest_session_id=${GSId}`,

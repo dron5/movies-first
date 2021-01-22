@@ -39,12 +39,11 @@ export default class Main extends Component{
 	}
 	
 	setWord = (name) => {
-		const value = name.trim();
-		if (!value) return;
+		const word = name.trim();
+		if (!word) return;
 		this.setState({
-			word: value,
+			word,
 		});
-		const { word } = this.state;
 		this.searchMovie(word);
 	}
 
@@ -105,17 +104,17 @@ export default class Main extends Component{
 			return (
 				<MovieServiceConsumer key={id}>
 					{(guestId) =>  (
-								<Card
-									id={id}
-									vote={vote}
-									guestId={guestId}
-									title={title}
-									genre={genre}
-									overview={overview}
-									date={date === undefined ? '' : date}
-									posterUrl={posterUrl}
-								/>
-							)	}
+						<Card
+							id={id}
+							vote={vote}
+							guestId={guestId}
+							title={title}
+							genre={genre}
+							overview={overview}
+							date={date === undefined ? '' : date}
+							posterUrl={posterUrl}
+						/>
+					)	}
 				</MovieServiceConsumer>	
 			);
 		});

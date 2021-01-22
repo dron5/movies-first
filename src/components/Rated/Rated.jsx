@@ -4,18 +4,17 @@ import PropTypes from 'prop-types';
 import Footer from '../Footer';
 import Card from '../Card';
 
-const setPage = (key) => key;
-
 const Rated = ({ data, totalPages }) => {
   const elements = data.map((item) => {
-    const { id, title, overview, date, img, genre, vote } = item;
+    const { id, title, overview, date, img, genre, vote, rating } = item;
 		let posterUrl = '';
     if (img) posterUrl = img;
     return (
       <Card
-					key={id.toString()}
+					key={id}
           flag={1}
           vote={vote}
+          rating={rating}
 					title={title}
 					genre={genre}
 					overview={overview}
@@ -28,7 +27,7 @@ const Rated = ({ data, totalPages }) => {
     <div className="main">
       {elements}
       <Footer
-        setPage={setPage}
+        // setPage
         totalPages={totalPages}
         showSizeChanger={false}
       />

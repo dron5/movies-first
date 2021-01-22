@@ -15,7 +15,7 @@ const movieService = new MovieService();
 
 const { rateMovie } = movieService;
 
-const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag }) => {
+const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag, rating }) => {
 	const basePosterUrl = 'http://image.tmdb.org/t/p/w185';
 	let className = "";
 
@@ -28,7 +28,7 @@ const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag
 	if (date) {
 		releaseDate = format(new Date(date), 'PP');
 	}
-
+	const toRateMovie = (num) => rateMovie(num, id, guestId);
 	return (
 		<div className="card">
 			<div className="img">
@@ -47,8 +47,8 @@ const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag
 				<Rate
 					allowHalf
 					count={10}
-					defaultValue={flag ? vote : 0}
-					onChange={(num) => rateMovie(id, num, guestId)}
+					defaultValue={flag ? rating : 0}
+					onChange={toRateMovie}
 				/>
 			</div>
 		</div>
@@ -61,6 +61,7 @@ Card.defaultProps = {
 	id: 0,
 	guestId: '',
 	flag: 0,
+	rating: 0,
 };
 
 Card.propTypes = {
@@ -72,6 +73,7 @@ Card.propTypes = {
 	genre: PropTypes.arrayOf(PropTypes.number),
 	guestId: PropTypes.string,
 	vote: PropTypes.number.isRequired,
+	rating: PropTypes.number,
 	flag: PropTypes.number,
 };
 
