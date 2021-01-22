@@ -40,11 +40,11 @@ export default class  MovieService {
 		return await rateds.json();
 	}
 
-	async getData(url1,url2='') {
+	async baseRequest(apiName,params='') {
 		const answer =
-			await fetch(`${this._apiBase}${url1}${this._apiKey}${url2}`);
+			await fetch(`${this._apiBase}${apiName}${this._apiKey}${params}`);
 		if (!answer.ok) {
-			throw new Error(`Could not fetch... ${url1}` +
+			throw new Error(`Could not fetch... ${apiName}` +
 			`, received ${answer.status}`);
 		}
 		return await answer.json();
@@ -68,13 +68,13 @@ export default class  MovieService {
 
 	async getGenres() {
 		const genres =
-			await this.getData(this._apiGenres);
+			await this.baseRequest(this._apiGenres);
 		return genres;
 	};
 
 	async getMoviesData(param, page=1) {
 		const movies =
-			await this.getData(this._apiSearch, `&query=${param}&page=${page}`);
+			await this.baseRequest(this._apiSearch, `&query=${param}&page=${page}`);
 		const ids = this.getMovieParam(movies);
 		return ids;
 	}

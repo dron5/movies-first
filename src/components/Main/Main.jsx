@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-fragments */
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import MovieService from '../../services/MovieService';
 import { MovieServiceConsumer } from '../MovieServiceContext';
@@ -92,7 +91,7 @@ export default class Main extends Component{
 					totalPages: body.total_pages,
 				});
 			})
-			.catch(err => this.onError(err.message));
+			.catch((err) => this.onError(err.message));
 	}
 	
 	render () {
@@ -118,19 +117,13 @@ export default class Main extends Component{
 				</MovieServiceConsumer>	
 			);
 		});
-		const movies = <Fragment>{elements}</Fragment>;
-		const hasData = !(loading || error);
-
-		const errorMessage = error ? <AlertMessage message={errMessage} /> : null;
-		const spinner = loading ? <Spinner /> : null;
-		const cards = hasData ? movies : null;
 
 		return (
 			<div className="main">
 				<Header setWord={this.setWord}/>
-				{spinner}
-				{cards}
-				{errorMessage}
+				{loading && <Spinner />}
+				{error && <AlertMessage message={errMessage} />}
+				{!(loading || error) && elements}
 				<Footer setPage={this.setPage} totalPages={totalPages}/>
 			</div>
 		);	

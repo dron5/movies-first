@@ -34,17 +34,16 @@ export default class App extends Component {
       this.movie
 				.getSessionId()
         .then((body) => {
-					this.setState(() => ({
+					this.setState({
 						guestId: body.guest_session_id,
-					}));
+					});
 					sessionStorage.setItem('guestId',
 						JSON.stringify(body.guest_session_id));
 				});
 		} else {
-				const guestId = JSON.parse(sessionStorage.getItem('guestId'));
-				this.setState(() => ({
-					guestId,
-			}));
+				this.setState({
+					guestId: JSON.parse(sessionStorage.getItem('guestId')),
+			});
 		}
 	}
 
@@ -63,10 +62,10 @@ export default class App extends Component {
               vote: el.vote_average, rating: el.rating
             });
           });
-          this.setState(() => ({
+          this.setState({
             data: moviesData,
             totalPages: body.total_pages,
-          }));
+          });
         });
     }
   };

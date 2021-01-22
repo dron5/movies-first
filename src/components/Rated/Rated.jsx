@@ -7,8 +7,6 @@ import Card from '../Card';
 const Rated = ({ data, totalPages }) => {
   const elements = data.map((item) => {
     const { id, title, overview, date, img, genre, vote, rating } = item;
-		let posterUrl = '';
-    if (img) posterUrl = img;
     return (
       <Card
 					key={id}
@@ -19,7 +17,7 @@ const Rated = ({ data, totalPages }) => {
 					genre={genre}
 					overview={overview}
 					date={date}
-					posterUrl={posterUrl}
+					posterUrl={img || ''}
 				/>
     );
   });

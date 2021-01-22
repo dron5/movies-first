@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { Rate } from 'antd';
 
 import MovieService from '../../services/MovieService';
-
+import { voteClassSetter } from '../../services/utils';
 import Genres from '../Genres';
 
 import './Card.css';
@@ -17,13 +17,9 @@ const { rateMovie } = movieService;
 
 const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag, rating }) => {
 	const basePosterUrl = 'http://image.tmdb.org/t/p/w185';
-	let className = "";
-
-	if (vote >= 0 && vote < 3) className = "firstColor";
-	if (vote >= 3 && vote < 5) className = "secondColor";
-	if (vote >= 5 && vote < 7) className = "thirdColor";
-	if (vote >= 7) className = "fourthColor";
 	
+	const className = voteClassSetter(vote);
+
 	let releaseDate = 'not release date';
 	if (date) {
 		releaseDate = format(new Date(date), 'PP');
