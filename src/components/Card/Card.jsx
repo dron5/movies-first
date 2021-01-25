@@ -44,7 +44,7 @@ const Card = ({ title, overview, date, posterUrl, genre, id, guestId, vote, flag
 					allowHalf
 					count={10}
 					defaultValue={flag ? rating : 0}
-					onChange={toRateMovie}
+					onChange={guestId && toRateMovie}
 				/>
 			</div>
 		</div>

@@ -24,11 +24,11 @@ const Rated = ({ data, totalPages }) => {
   return (
     <div className="main">
       {elements}
-      <Footer
+      {totalPages > 2 && <Footer
         // setPage
         totalPages={totalPages}
         showSizeChanger={false}
-      />
+      />}
     </div>
   );
 };

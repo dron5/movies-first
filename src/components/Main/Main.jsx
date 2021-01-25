@@ -124,7 +124,7 @@ export default class Main extends Component{
 				{loading && <Spinner />}
 				{error && <AlertMessage message={errMessage} />}
 				{!(loading || error) && elements}
-				<Footer setPage={this.setPage} totalPages={totalPages}/>
+				{totalPages > 2 && <Footer setPage={this.setPage} totalPages={totalPages} />}
 			</div>
 		);	
 	};
