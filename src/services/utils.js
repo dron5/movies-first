@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 const voteClassSetter = (voteNum) => {
   let className = '';
   if (voteNum >= 0 && voteNum < 3) className = "firstColor";
@@ -8,4 +7,14 @@ const voteClassSetter = (voteNum) => {
   return className;
 };
 
-export { voteClassSetter };
+const setToStorage = (paramName, paramValue) => {
+  sessionStorage.setItem(paramName, JSON.stringify(paramValue));
+};
+
+const getFromStorage = (paramName) =>
+  JSON.parse(sessionStorage.getItem(paramName));
+
+export {
+  voteClassSetter,
+  setToStorage, getFromStorage
+};

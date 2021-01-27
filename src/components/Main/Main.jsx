@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import MovieService from '../../services/MovieService';
 import { MovieServiceConsumer } from '../MovieServiceContext';
+import { setToStorage } from '../../services/utils';
 
 import AlertMessage from '../AlertMessage';
 import Card from '../Card';
@@ -66,7 +67,7 @@ export default class Main extends Component{
 		genreList.forEach((el) => {
 			genres[el.id.toString()] = el.name;
 		});
-		sessionStorage.setItem('genres', JSON.stringify(genres));
+		setToStorage('genres', genres);
 	}
 
 	searchGenres = () => {
