@@ -22,80 +22,80 @@ export default class App extends Component {
   movie = new MovieService();
   
   state = {
-	data: [],
-	totalPages: 0,
-	guestId: '',
-	false: false,
-	toggle: false,
+    data: [],
+    totalPages: 0,
+    guestId: '',
+    false: false,
+    toggle: false,
   }
 
   componentDidMount() {
-	this.setGuestId();
+    this.setGuestId();
   }
 
   setGuestId = () => {
-	if (getFromStorage('guestId') === null) {
-	  this.movie
-		.getSessionId()
-		.then((body) => {
-		  this.setState({
-			guestId: body.guest_session_id,
-		  });
-		  setToStorage('guestId',
-			body.guest_session_id);
-		});
-	} else {
-		this.setState({
-		  guestId: getFromStorage('guestId'),
-	  });
-	}
+  if (getFromStorage('guestId') === null) {
+    this.movie
+    .getSessionId()
+    .then((body) => {
+      this.setState({
+      guestId: body.guest_session_id,
+      });
+      setToStorage('guestId',
+      body.guest_session_id);
+    });
+  } else {
+      this.setState({
+        guestId: getFromStorage('guestId'),
+      });
+  }
   }
 
   getRated = (key) => {
-	if (key === 'Rated') {
-	  const guestId = getFromStorage('guestId');
-	  const moviesData = [];
-	  this.movie
-		.getRatedMovies(guestId)
-		.then((body) => {
-		  body.results.forEach((el) => {
-			moviesData.push({
-			  id: el.id, title: el.title,
-			  img: el.poster_path, overview: el.overview,
-			  genre: el.genre_ids, date: el.release_date,
-			  vote: el.vote_average, rating: el.rating
-			});
-		  });
-		  this.setState({
-			data: moviesData,
-			totalPages: body.total_pages,
-		  });
-		});
-	}
+  if (key === 'Rated') {
+    const guestId = getFromStorage('guestId');
+    const moviesData = [];
+    this.movie
+    .getRatedMovies(guestId)
+    .then((body) => {
+      body.results.forEach((el) => {
+      moviesData.push({
+        id: el.id, title: el.title,
+        img: el.poster_path, overview: el.overview,
+        genre: el.genre_ids, date: el.release_date,
+        vote: el.vote_average, rating: el.rating
+      });
+      });
+      this.setState({
+      data: moviesData,
+      totalPages: body.total_pages,
+      });
+    });
+  }
   };
 
-	render() {
+  render() {
     const { data, totalPages } = this.state;
     return (
-		<div className="main">
-		  <Fragment>
-			<MovieServiceProvider value={this.state.guestId}>
-			<Tabs
-			  defaultActiveKey="1"
-			  onChange={this.getRated}
-			  centered 
-			  size="large">
-				<TabPane tab="Search" key='Search'>
-				  <Main /> 
-				</TabPane>
-				<TabPane tab="Rated" key='Rated'>
-				  <Rated data={data} totalPages={totalPages} />
-				</TabPane>
-			  </Tabs>
-			</MovieServiceProvider>
-		  </Fragment>
-		</div>  
-	  );
-	};
+    <div className="main">
+      <Fragment>
+      <MovieServiceProvider value={this.state.guestId}>
+      <Tabs
+        defaultActiveKey="1"
+        onChange={this.getRated}
+        centered 
+        size="large">
+        <TabPane tab="Search" key='Search'>
+          <Main /> 
+        </TabPane>
+        <TabPane tab="Rated" key='Rated'>
+          <Rated data={data} totalPages={totalPages} />
+        </TabPane>
+        </Tabs>
+      </MovieServiceProvider>
+      </Fragment>
+    </div>  
+    );
+  };
 };
 
