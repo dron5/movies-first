@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { format } from 'date-fns';
@@ -17,17 +17,17 @@ const { rateMovie } = movieService;
 
 const Card = ({ title, overview, date, posterUrl, genre,
 	id, guestId, vote, flag, rating }) => {
-	
-	const [ ratio ] = useState(rating);
+
+	const [ ratio, setRatio ] = useState(rating);
 
 	const basePosterUrl = 'http://image.tmdb.org/t/p/w185';
 
 	if (!guestId) {
 		console.log('in Card Rated title : --', title, 'rating :', ratio);
 	}
-	// useEffect(() => setRatio(rating), [rating]);
+	useEffect(() => setRatio(rating), [rating]);
 	const className = voteClassSetter(vote);
-	
+
 	let releaseDate = 'not release date';
 	if (date) {
 		releaseDate = format(new Date(date), 'PP');

@@ -2,7 +2,6 @@
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-unused-prop-types */
-// /* eslint-disable react/destructuring-assignment */
 // import React, { Component } from 'react';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -61,20 +60,22 @@ import Card from '../Card';
 
 const Rated = ({ data, totalPages }) => {
   const elements = data.map((item) => {
-    const { id, title, overview, date, img, genre, vote, rating } = item;
+    const {
+      id, title, overview, date, img, genre, vote, rating
+    } = item;
     console.log('in Rated title : --', title, 'rating :', rating);
     return (
       <Card
-					key={id}
+          key={id}
           flag={1}
           vote={vote}
           rating={rating}
-					title={title}
-					genre={genre}
-					overview={overview}
-					date={date}
-					posterUrl={img || ''}
-				/>
+          title={title}
+          genre={genre}
+          overview={overview}
+          date={date}
+          posterUrl={img || ''}
+        />
     );
   });
   return (
