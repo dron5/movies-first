@@ -38,8 +38,8 @@ export default class Main extends Component{
 		if (word !== prevState.word) this.searchMovie(word);
 	}
 	
-	setWord = (name) => {
-		const word = name.trim();
+  setWord = (name) => {
+    const word = name.trim();
 		if (!word) return;
 		this.setState({
 			word,
