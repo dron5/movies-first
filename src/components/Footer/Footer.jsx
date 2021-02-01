@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { Pagination } from 'antd';
+import { Pagination } from "antd";
 
-import './Footer.css';
+import "./Footer.css";
 
-const Footer = ({setPage, totalPages}) => (
+const Footer = ({ setPage, totalPages }) => (
   <div className="footer">
     <Pagination
-      total={totalPages*10}
+      total={totalPages * 10}
       onChange={setPage}
       showSizeChanger={false}
     />
@@ -16,13 +16,12 @@ const Footer = ({setPage, totalPages}) => (
 );
 
 Footer.defaultProps = {
-  setPage: () => { },
+  setPage: () => {},
 };
 
 Footer.propTypes = {
   setPage: PropTypes.func,
   totalPages: PropTypes.number.isRequired,
 };
-
 
 export default Footer;

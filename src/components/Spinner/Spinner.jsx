@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { Spin } from 'antd';
+import { Spin } from "antd";
 
-import './Spinner.css';
+import "./Spinner.css";
 
 const Spinner = () => (
   <div className="main">
@@ -10,6 +10,6 @@ const Spinner = () => (
       <Spin tip="Loading files..." size="large" />
     </div>
   </div>
-  );
-  
+);
+
 export default Spinner;

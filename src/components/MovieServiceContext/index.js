@@ -1,9 +1,6 @@
 import {
   MovieServiceProvider,
-  MovieServiceConsumer
-} from './MovieServiceContext';
+  MovieServiceConsumer,
+} from "./MovieServiceContext";
 
-export {
-  MovieServiceProvider,
-  MovieServiceConsumer
-};
+export { MovieServiceProvider, MovieServiceConsumer };

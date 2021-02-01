@@ -1,5 +1,5 @@
 const voteClassSetter = (voteNum) => {
-  let className = '';
+  let className = "";
   if (voteNum >= 0 && voteNum < 3) className = "firstColor";
   if (voteNum >= 3 && voteNum < 5) className = "secondColor";
   if (voteNum >= 5 && voteNum < 7) className = "thirdColor";
@@ -14,7 +14,4 @@ const setToStorage = (paramName, paramValue) => {
 const getFromStorage = (paramName) =>
   JSON.parse(sessionStorage.getItem(paramName));
 
-export {
-  voteClassSetter,
-  setToStorage, getFromStorage
-};
+export { voteClassSetter, setToStorage, getFromStorage };

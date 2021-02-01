@@ -1,4 +1,4 @@
-.genres{
+.genres {
   font-size: 12px;
   line-height: 12px;
   border-radius: 3px;
@@ -8,6 +8,6 @@
   margin-right: 2px;
   outline: none;
 }
-.genres:hover{
+.genres:hover {
   cursor: pointer;
 }

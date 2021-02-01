@@ -1,16 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { Alert } from 'antd';
+import { Alert } from "antd";
 
-import './AlertMessage.css';
+import "./AlertMessage.css";
 
-const AlertMessage = ({message}) => (
-    <Alert
-      description={message==='Failed to fetch' ? 'No internet connection' : message}
-      type="error"
-    />
-  );
+const AlertMessage = ({ message }) => (
+  <Alert
+    description={
+      message === "Failed to fetch" ? "No internet connection" : message
+    }
+    type="error"
+  />
+);
 
 export default AlertMessage;
 

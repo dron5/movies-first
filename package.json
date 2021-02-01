@@ -23,7 +23,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix --color",
-    "format": "prettier ./src"
+    "format": "prettier --write ./src"
   },
   "eslintConfig": {
     "extends": [
@@ -64,8 +64,9 @@
     }
   },
   "lint-staged": {
-    "*jsx": [
+    "*.{js, jsx}": [
       "npm run lint:fix",
+      "prettier --write",
       "git add"
     ]
   }

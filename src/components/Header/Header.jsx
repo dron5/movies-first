@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import Search from '../Search';
+import Search from "../Search";
 
-import './Header.css';
+import "./Header.css";
 
-const Header = ({setWord}) => (
-    <div className="header">
-      <Search setWord={setWord}/>
-    </div>
+const Header = ({ setWord }) => (
+  <div className="header">
+    <Search setWord={setWord} />
+  </div>
 );
 
 Header.defaultProps = {

@@ -1,31 +1,30 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import MovieService from '../../services/MovieService';
-import { MovieServiceConsumer } from '../MovieServiceContext';
-import { setToStorage } from '../../services/utils';
+import MovieService from "../../services/MovieService";
+import { MovieServiceConsumer } from "../MovieServiceContext";
+import { setToStorage } from "../../services/utils";
 
-import AlertMessage from '../AlertMessage';
-import Card from '../Card';
-import Spinner from '../Spinner';
-import Header from '../Header';
-import Footer from '../Footer';
+import AlertMessage from "../AlertMessage";
+import Card from "../Card";
+import Spinner from "../Spinner";
+import Header from "../Header";
+import Footer from "../Footer";
 
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
 
-import './Main.css';
+import "./Main.css";
 
-export default class Main extends Component{
-
+export default class Main extends Component {
   movie = new MovieService();
 
   state = {
     data: [],
     loading: true,
     error: false,
-    errMessage: '',
+    errMessage: "",
     totalPages: 0,
-    word: 'return',
-  }
+    word: "return",
+  };
 
   componentDidMount() {
     const { word } = this.state;
@@ -37,7 +36,7 @@ export default class Main extends Component{
     const { word } = this.state;
     if (word !== prevState.word) this.searchMovie(word);
   }
-  
+
   setWord = (name) => {
     const word = name.trim();
     if (!word) return;
@@ -45,12 +44,12 @@ export default class Main extends Component{
       word,
     });
     this.searchMovie(word);
-  }
+  };
 
   setPage = (page) => {
     const { word } = this.state;
     this.searchMovie(word, page);
-  }
+  };
 
   onError = (message) => {
     this.setState({
@@ -59,28 +58,26 @@ export default class Main extends Component{
       loading: false,
       totalPages: 0,
     });
-  }
+  };
 
   setSessionStorage = (genreList) => {
-    if ('genres' in sessionStorage) return;
-    const genres = {'0': 'No genre'};
+    if ("genres" in sessionStorage) return;
+    const genres = { 0: "No genre" };
     genreList.forEach((el) => {
       genres[el.id.toString()] = el.name;
     });
-    setToStorage('genres', genres);
-  }
+    setToStorage("genres", genres);
+  };
 
   searchGenres = () => {
-    this.movie
-      .getGenres()
-      .then((body) => {
-        this.setSessionStorage(body.genres);
-      });
-  }
+    this.movie.getGenres().then((body) => {
+      this.setSessionStorage(body.genres);
+    });
+  };
 
-  searchMovie = (param,page=1) => {
+  searchMovie = (param, page = 1) => {
     this.movie
-      .getMoviesData(param, page)
+      .getMoviesList(param, page)
       .then((body) => {
         if (body.results.length === 0) {
           throw new Error("По вашему запросу ничего не найдено!!!");
@@ -93,40 +90,43 @@ export default class Main extends Component{
         });
       })
       .catch((err) => this.onError(err.message));
-  }
-  
-  render () {
+  };
+
+  render() {
     const { data, loading, error, totalPages, errMessage } = this.state;
     const elements = data.map((item) => {
-      const { id, title, overview, date, img, genre, vote } = item;
-      let posterUrl = '';
+      const { id, title, overview, date, img, genre, vote, rating } = item;
+      let posterUrl = "";
       if (img) posterUrl = img;
       return (
         <MovieServiceConsumer key={id}>
-          {(guestId) =>  (
+          {(guestId) => (
             <Card
               id={id}
               vote={vote}
+              rating={rating}
               guestId={guestId}
               title={title}
               genre={genre}
               overview={overview}
-              date={date === undefined ? '' : date}
+              date={date === undefined ? "" : date}
               posterUrl={posterUrl}
             />
-          )	}
-        </MovieServiceConsumer>	
+          )}
+        </MovieServiceConsumer>
       );
     });
 
     return (
       <div className="main">
-        <Header setWord={this.setWord}/>
+        <Header setWord={this.setWord} />
         {loading && <Spinner />}
         {error && <AlertMessage message={errMessage} />}
         {!(loading || error) && elements}
-        {totalPages > 2 && <Footer setPage={this.setPage} totalPages={totalPages} />}
+        {totalPages > 2 && (
+          <Footer setPage={this.setPage} totalPages={totalPages} />
+        )}
       </div>
-    );	
-  };
+    );
+  }
 }

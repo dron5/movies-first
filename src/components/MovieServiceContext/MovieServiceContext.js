@@ -1,11 +1,8 @@
-import React from 'react';
+import React from "react";
 
-const { 
+const {
   Provider: MovieServiceProvider,
-  Consumer: MovieServiceConsumer
+  Consumer: MovieServiceConsumer,
 } = React.createContext();
 
-export {
-  MovieServiceProvider,
-  MovieServiceConsumer
-};
+export { MovieServiceProvider, MovieServiceConsumer };
