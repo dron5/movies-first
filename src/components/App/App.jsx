@@ -6,7 +6,6 @@ import React, { Component, Fragment } from "react";
 
 import { Tabs } from "antd";
 
-import MovieService from "../../services/MovieService";
 import { MovieServiceProvider } from "../MovieServiceContext";
 import { setToStorage, getFromStorage } from "../../services/utils";
 
@@ -18,11 +17,8 @@ import "../../components/Main/Main.css";
 const { TabPane } = Tabs;
 
 export default class App extends Component {
-  movie = new MovieService();
-
+  
   state = {
-    data: [],
-    totalPages: 0,
     guestId: "",
   };
 
@@ -45,40 +41,14 @@ export default class App extends Component {
     }
   };
 
-  getRated = (key) => {
-    if (key === "Rated") {
-      const guestId = getFromStorage("guestId");
-      const moviesData = [];
-      this.movie.getRatedMovies(guestId).then((body) => {
-        body.results.forEach((el) => {
-          moviesData.push({
-            id: el.id,
-            title: el.title,
-            img: el.poster_path,
-            overview: el.overview,
-            genre: el.genre_ids,
-            date: el.release_date,
-            vote: el.vote_average,
-            rating: el.rating,
-          });
-        });
-        this.setState({
-          data: moviesData,
-          totalPages: body.total_pages,
-        });
-      });
-    }
-  };
-
   render() {
-    const { data, totalPages, guestId } = this.state;
+    const { guestId } = this.state;
     return (
       <div className="main">
         <Fragment>
           <MovieServiceProvider value={guestId}>
             <Tabs
               defaultActiveKey="Search"
-              onChange={this.getRated}
               centered
               size="large"
             >
@@ -86,7 +56,7 @@ export default class App extends Component {
                 <Main />
               </TabPane>
               <TabPane tab="Rated" key="Rated">
-                <Rated data={data} totalPages={totalPages} guestId={guestId}/>
+                <Rated guestId={guestId} />
               </TabPane>
             </Tabs>
           </MovieServiceProvider>
