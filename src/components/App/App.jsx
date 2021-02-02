@@ -18,21 +18,19 @@ const { TabPane } = Tabs;
 
 export default class App extends Component {
   movie = new MovieService();
-  
+
   state = {
     guestId: "",
-    status: true,
+    activeTab: "search",
   };
 
   componentDidMount() {
     this.setGuestId();
   }
 
-  changeStatus = () => {
-    this.setState(({ status }) => ({
-      status: !status,
-    }));
-  }
+  onChangeTab = (activeTab) => {
+    this.setState({ activeTab });
+  };
 
   setGuestId = () => {
     if (getFromStorage("guestId") === null) {
@@ -50,7 +48,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { guestId, status } = this.state;
+    const { guestId, activeTab } = this.state;
     return (
       <div className="main">
         <Fragment>
@@ -58,14 +56,14 @@ export default class App extends Component {
             <Tabs
               defaultActiveKey="Search"
               centered
-              onChange={this.changeStatus}
+              onChange={this.onChangeTab}
               size="large"
             >
               <TabPane tab="Search" key="Search">
-                <Main status={status} changeStatus={this.changeStatus} />
+                <Main activeTab={activeTab} />
               </TabPane>
               <TabPane tab="Rated" key="Rated">
-                <Rated guestId={guestId} status={status} changeStatus={this.changeStatus} />
+                <Rated guestId={guestId} activeTab={activeTab} />
               </TabPane>
             </Tabs>
           </MovieServiceProvider>

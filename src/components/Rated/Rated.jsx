@@ -10,7 +10,7 @@ import { getFromStorage } from "../../services/utils";
 import Footer from "../Footer";
 import Card from "../Card";
 
-export default class Rated extends Component{
+export default class Rated extends Component {
   movie = new MovieService();
 
   constructor(props) {
@@ -18,31 +18,34 @@ export default class Rated extends Component{
     this.state = {
       data: [],
       totalPages: null,
-      status: this.props.status,
     };
   }
 
   componentDidMount() {
-    // debugger;
     this.getRated();
   }
 
-  componentDidUpdate(prevProps) {
-    const { status } = this.state;
-    if (status !== prevProps.status) this.getRated();
+  componentDidUpdate(prevProps, prevState) {
+    const { activeTab } = this.props;
+    // console.log(activeTab === "Rated" && prevProps.activeTab === "Rated");
+    if (activeTab === "Rated" && prevProps.activeTab !== "Rated")
+      this.getRated();
   }
+  // componentDidUpdate(prevProps) {
+  //   const { status } = this.state;
+  //   if (status !== prevProps.status) this.getRated();
+  // }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-      if (prevState.status !== nextProps.status) {
-        return {
-          status: nextProps.status,
-        };
-      }
-      return null;
-    }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //     if (prevState.status !== nextProps.status) {
+  //       return {
+  //         status: nextProps.status,
+  //       };
+  //     }
+  //     return null;
+  //   }
 
   getRated = () => {
-    // debugger;
     const guestId = getFromStorage("guestId");
     const moviesData = [];
     this.movie.getRatedMovies(guestId).then((body) => {
@@ -67,44 +70,36 @@ export default class Rated extends Component{
 
   render() {
     const { data, totalPages } = this.state;
-    const { guestId, changeStatus } = this.props;
+    const { guestId } = this.props;
     const elements = data.map((item) => {
-    const { id, title, overview, date, img, genre, vote, rating } = item;
-    return (
-      <Card
-					key={id}
+      const { id, title, overview, date, img, genre, vote, rating } = item;
+      return (
+        <Card
+          key={id}
           id={id}
           vote={vote}
           rating={rating}
-					title={title}
-					genre={genre}
+          title={title}
+          genre={genre}
           overview={overview}
           guestId={guestId}
-          changeStatus={changeStatus}
-					date={date === undefined ? "" : date}
-          posterUrl={img || ''}
+          date={date === undefined ? "" : date}
+          posterUrl={img || ""}
           flag="RATED"
-				/>
+        />
+      );
+    });
+    return (
+      <div className="main">
+        {elements}
+        {totalPages > 2 && (
+          <Footer totalPages={totalPages} showSizeChanger={false} />
+        )}
+      </div>
     );
-  });
-  return (
-    <div className="main">
-      {elements}
-      {totalPages > 2 && <Footer
-        totalPages={totalPages}
-        showSizeChanger={false}
-      />}
-    </div>
-  );
-  };
+  }
 }
-
-Rated.defaultProps = {
-  changeStatus: () => {},
-};
 
 Rated.propTypes = {
   guestId: PropTypes.string.isRequired,
-  changeStatus: PropTypes.func,
-  status: PropTypes.bool.isRequired,
 };
