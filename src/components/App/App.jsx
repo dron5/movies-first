@@ -21,7 +21,7 @@ export default class App extends Component {
 
   state = {
     guestId: "",
-    activeTab: "search",
+    activeTab: "Search",
   };
 
   componentDidMount() {

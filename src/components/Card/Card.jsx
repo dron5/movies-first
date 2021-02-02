@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -22,15 +23,20 @@ export default class Card extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log("In Card componentDidMount");
-  }
+  // componentDidMount() {
+  //   const { flag } = this.props;
+  //   if (flag === "RATED"){
+  //   console.log("In Card componentDidMount");
+  //   }
+  // }
 
-  componentDidUpdate() {
-    const { rating, title } = this.props;
-    const { ratio } = this.state;
-    console.log("In Card componentDidUpdate", rating, title, ratio);
-  }
+  // componentDidUpdate() {
+  //   const { rating, title, flag } = this.props;
+  //   const { ratio } = this.state;
+  //   if (flag === "RATED"){
+  //   console.log("In Card componentDidUpdate", rating, title, ratio);
+  //   }
+  // }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.ratio !== nextProps.rating) {
@@ -52,6 +58,7 @@ export default class Card extends Component {
       guestId,
       vote,
       rating,
+      flag,
     } = this.props;
 
     const basePosterUrl = "http://image.tmdb.org/t/p/w185";
@@ -59,8 +66,8 @@ export default class Card extends Component {
     const onRateMovie = async (num) => {
       await this.movieService.rateMovie(num, id, guestId);
     };
-    const { ratio } = this.state;
-    console.log(ratio);
+    // const { ratio } = this.state;
+    // if (flag === "RATED") console.log(ratio);
     return (
       <div className="card">
         <div className="img">
@@ -94,6 +101,7 @@ Card.defaultProps = {
   id: 0,
   guestId: "",
   rating: 0,
+  flag: '',
 };
 
 Card.propTypes = {
@@ -106,4 +114,5 @@ Card.propTypes = {
   guestId: PropTypes.string,
   vote: PropTypes.number.isRequired,
   rating: PropTypes.number,
+  flag: PropTypes.string,
 };

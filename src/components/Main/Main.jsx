@@ -86,8 +86,7 @@ export default class Main extends Component {
           error: false,
           totalPages: body.total_pages,
         });
-      })
-      .catch((err) => this.onError(err.message));
+      });
   };
 
   render() {
