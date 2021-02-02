@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { format } from "date-fns";
@@ -11,35 +11,59 @@ import Genres from "../Genres";
 import "./Card.css";
 import noposter from "./no-poster.jpg";
 
-const movieService = new MovieService();
+export default class Card extends Component {
+  movieService = new MovieService();
 
-const { rateMovie } = movieService;
+  constructor(props) {
+    super(props);
+    const { rating } = this.props;
+    this.state = {
+      ratio: rating,
+    };
+  }
 
-const Card = ({
-  title,
-  overview,
-  date,
-  posterUrl,
-  genre,
-  id,
-  guestId,
-  vote,
-  rating,
-  // flag,
-}) => {
-  const basePosterUrl = "http://image.tmdb.org/t/p/w185";
+  componentDidMount() {
+    console.log("In Card componentDidMount");
+  }
 
-  const className = voteClassSetter(vote);
+  componentDidUpdate() {
+    const {rating, title} = this.props;
+    const { ratio } = this.state;
+    console.log("In Card componentDidUpdate", rating, title, ratio);
+  }
 
-  const onRateMovie = async (num) => {
-    await rateMovie(num, id, guestId);
-  };
+  static getDerivedStateFromProps(nextProps, prevState) {
+      if (prevState.ratio !== nextProps.rating) {
+        return {
+          ratio: nextProps.rating,
+        }
+      }
+      return null;
+    }
 
-  // if (flag === 'RATED') console.log(flag, "rating", rating);
-  return (
-    <div className="card">
-      <div className="img">
-        <img
+  render() {
+    const { title,
+      overview,
+      date,
+      posterUrl,
+      genre,
+      id,
+      guestId,
+      vote,
+      rating,
+    } = this.props;
+
+    const basePosterUrl = "http://image.tmdb.org/t/p/w185";
+    const className = voteClassSetter(vote);
+    const onRateMovie = async (num) => {
+      await this.movieService.rateMovie(num, id, guestId);
+    };
+    const { ratio } = this.state;
+    console.log(ratio);
+    return (
+      <div className="card">
+       <div className="img">
+         <img
           src={posterUrl ? `${basePosterUrl}${posterUrl}` : noposter}
           alt="poster"
         />
@@ -60,8 +84,9 @@ const Card = ({
         />
       </div>
     </div>
-  );
-};
+    );
+  }
+}
 
 Card.defaultProps = {
   genre: [0],
@@ -80,7 +105,4 @@ Card.propTypes = {
   guestId: PropTypes.string,
   vote: PropTypes.number.isRequired,
   rating: PropTypes.number,
-  // flag: PropTypes.string.isRequired,
 };
-
-export default Card;

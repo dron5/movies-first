@@ -31,19 +31,6 @@ export default class Rated extends Component {
     if (activeTab === "Rated" && prevProps.activeTab !== "Rated")
       this.getRated();
   }
-  // componentDidUpdate(prevProps) {
-  //   const { status } = this.state;
-  //   if (status !== prevProps.status) this.getRated();
-  // }
-
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //     if (prevState.status !== nextProps.status) {
-  //       return {
-  //         status: nextProps.status,
-  //       };
-  //     }
-  //     return null;
-  //   }
 
   getRated = () => {
     const guestId = getFromStorage("guestId");

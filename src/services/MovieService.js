@@ -41,7 +41,6 @@ export default class MovieService {
     const rateds = await fetch(
       `${this._apiBase}guest_session/${id}/rated/movies?${this._apiKey}`
     );
-    console.log(rateds.json);
     return await rateds.json();
   }
 
