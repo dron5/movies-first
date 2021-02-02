@@ -5,7 +5,7 @@
 import React, { Component, Fragment } from "react";
 
 import { Tabs } from "antd";
-
+import MovieService from "../../services/MovieService";
 import { MovieServiceProvider } from "../MovieServiceContext";
 import { setToStorage, getFromStorage } from "../../services/utils";
 
@@ -17,13 +17,21 @@ import "../../components/Main/Main.css";
 const { TabPane } = Tabs;
 
 export default class App extends Component {
+  movie = new MovieService();
   
   state = {
     guestId: "",
+    status: true,
   };
 
   componentDidMount() {
     this.setGuestId();
+  }
+
+  changeStatus = () => {
+    this.setState(({ status }) => ({
+      status: !status,
+    }));
   }
 
   setGuestId = () => {
@@ -42,7 +50,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { guestId } = this.state;
+    const { guestId, status } = this.state;
     return (
       <div className="main">
         <Fragment>
@@ -50,13 +58,14 @@ export default class App extends Component {
             <Tabs
               defaultActiveKey="Search"
               centered
+              onChange={this.changeStatus}
               size="large"
             >
               <TabPane tab="Search" key="Search">
-                <Main />
+                <Main status={status} changeStatus={this.changeStatus} />
               </TabPane>
               <TabPane tab="Rated" key="Rated">
-                <Rated guestId={guestId} />
+                <Rated guestId={guestId} status={status} changeStatus={this.changeStatus} />
               </TabPane>
             </Tabs>
           </MovieServiceProvider>

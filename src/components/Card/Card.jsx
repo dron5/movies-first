@@ -1,5 +1,4 @@
-// /* eslint-disable no-debugger */
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 
 import { format } from "date-fns";
@@ -26,13 +25,24 @@ const Card = ({
   guestId,
   vote,
   rating,
+  flag,
+  changeStatus
 }) => {
+
+  useEffect(() => {
+    if (flag === 'RATED') console.log("useEffect()");
+  });
+
   const basePosterUrl = "http://image.tmdb.org/t/p/w185";
 
   const className = voteClassSetter(vote);
 
-  const onRateMovie = (num) => rateMovie(num, id, guestId);
-  // console.log(rating);
+  const onRateMovie = (num) => {
+    rateMovie(num, id, guestId);
+    setTimeout(changeStatus, 500);
+  };
+  
+  if (flag === 'RATED') console.log(flag, "rating", rating);
   return (
     <div className="card">
       <div className="img">
@@ -52,7 +62,6 @@ const Card = ({
         <Rate
           allowHalf
           count={10}
-          // value={rating}
           defaultValue={rating}
           onChange={onRateMovie}
         />
@@ -65,8 +74,8 @@ Card.defaultProps = {
   genre: [0],
   id: 0,
   guestId: "",
-  // flag: 0,
   rating: 0,
+  changeStatus: ()=>{},
 };
 
 Card.propTypes = {
@@ -79,6 +88,8 @@ Card.propTypes = {
   guestId: PropTypes.string,
   vote: PropTypes.number.isRequired,
   rating: PropTypes.number,
+  flag: PropTypes.string.isRequired,
+  changeStatus: PropTypes.func,
 };
 
 export default Card;

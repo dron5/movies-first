@@ -1,7 +1,7 @@
 /* eslint-disable react/no-did-update-set-state */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -18,14 +18,31 @@ export default class Rated extends Component{
     this.state = {
       data: [],
       totalPages: null,
+      status: this.props.status,
     };
   }
 
   componentDidMount() {
+    // debugger;
     this.getRated();
   }
 
+  componentDidUpdate(prevProps) {
+    const { status } = this.state;
+    if (status !== prevProps.status) this.getRated();
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+      if (prevState.status !== nextProps.status) {
+        return {
+          status: nextProps.status,
+        };
+      }
+      return null;
+    }
+
   getRated = () => {
+    // debugger;
     const guestId = getFromStorage("guestId");
     const moviesData = [];
     this.movie.getRatedMovies(guestId).then((body) => {
@@ -49,22 +66,24 @@ export default class Rated extends Component{
   };
 
   render() {
-    const { data, totalPages, guestId } = this.state;
+    const { data, totalPages } = this.state;
+    const { guestId, changeStatus } = this.props;
     const elements = data.map((item) => {
     const { id, title, overview, date, img, genre, vote, rating } = item;
     return (
       <Card
 					key={id}
           id={id}
-          flag={1}
           vote={vote}
           rating={rating}
 					title={title}
 					genre={genre}
           overview={overview}
           guestId={guestId}
+          changeStatus={changeStatus}
 					date={date === undefined ? "" : date}
-					posterUrl={img || ''}
+          posterUrl={img || ''}
+          flag="RATED"
 				/>
     );
   });
@@ -81,12 +100,11 @@ export default class Rated extends Component{
 }
 
 Rated.defaultProps = {
-  data: [0],
-  totalPages: 0,
+  changeStatus: () => {},
 };
 
 Rated.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.arrayOf),
-  totalPages: PropTypes.number,
   guestId: PropTypes.string.isRequired,
+  changeStatus: PropTypes.func,
+  status: PropTypes.bool.isRequired,
 };

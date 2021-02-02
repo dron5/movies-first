@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import MovieService from "../../services/MovieService";
 import { MovieServiceConsumer } from "../MovieServiceContext";
@@ -10,7 +11,6 @@ import Spinner from "../Spinner";
 import Header from "../Header";
 import Footer from "../Footer";
 
-import "antd/dist/antd.css";
 
 import "./Main.css";
 
@@ -24,6 +24,7 @@ export default class Main extends Component {
     errMessage: "",
     totalPages: 0,
     word: "return",
+    // status: true,
   };
 
   componentDidMount() {
@@ -94,6 +95,7 @@ export default class Main extends Component {
 
   render() {
     const { data, loading, error, totalPages, errMessage } = this.state;
+    const { changeStatus } = this.props;
     const elements = data.map((item) => {
       const { id, title, overview, date, img, genre, vote, rating } = item;
       let posterUrl = "";
@@ -109,8 +111,10 @@ export default class Main extends Component {
               title={title}
               genre={genre}
               overview={overview}
+              changeStatus={changeStatus}
               date={date === undefined ? "" : date}
               posterUrl={posterUrl}
+              flag="MAIN"
             />
           )}
         </MovieServiceConsumer>
@@ -130,3 +134,11 @@ export default class Main extends Component {
     );
   }
 }
+
+Main.defaultProps = {
+  changeStatus: () => {},
+};
+
+Main.propTypes = {
+  changeStatus: PropTypes.func,
+};
