@@ -27,22 +27,23 @@ export default class Card extends Component {
   }
 
   componentDidUpdate() {
-    const {rating, title} = this.props;
+    const { rating, title } = this.props;
     const { ratio } = this.state;
     console.log("In Card componentDidUpdate", rating, title, ratio);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-      if (prevState.ratio !== nextProps.rating) {
-        return {
-          ratio: nextProps.rating,
-        }
-      }
-      return null;
+    if (prevState.ratio !== nextProps.rating) {
+      return {
+        ratio: nextProps.rating,
+      };
     }
+    return null;
+  }
 
   render() {
-    const { title,
+    const {
+      title,
       overview,
       date,
       posterUrl,
@@ -62,28 +63,28 @@ export default class Card extends Component {
     console.log(ratio);
     return (
       <div className="card">
-       <div className="img">
-         <img
-          src={posterUrl ? `${basePosterUrl}${posterUrl}` : noposter}
-          alt="poster"
-        />
-      </div>
-      <div className="content">
-        <div className="card_header">
-          <div className="title">{title}</div>
-          <div className={className}>{vote}</div>
+        <div className="img">
+          <img
+            src={posterUrl ? `${basePosterUrl}${posterUrl}` : noposter}
+            alt="poster"
+          />
         </div>
-        <div>{date ? format(new Date(date), "PP") : "not release date"}</div>
-        <Genres genre={genre} />
-        <p>{overview}</p>
-        <Rate
-          allowHalf
-          count={10}
-          defaultValue={rating}
-          onChange={onRateMovie}
-        />
+        <div className="content">
+          <div className="card_header">
+            <div className="title">{title}</div>
+            <div className={className}>{vote}</div>
+          </div>
+          <div>{date ? format(new Date(date), "PP") : "not release date"}</div>
+          <Genres genre={genre} />
+          <p>{overview}</p>
+          <Rate
+            allowHalf
+            count={10}
+            defaultValue={rating}
+            onChange={onRateMovie}
+          />
+        </div>
       </div>
-    </div>
     );
   }
 }
