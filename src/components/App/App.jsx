@@ -8,8 +8,7 @@ import MovieService from "../../services/movieService";
 import { MovieServiceProvider } from "../MovieServiceContext";
 import { setToStorage, getFromStorage } from "../../services/utils";
 
-import SearchTab from "../SearchTab";
-import RatedTab from "../RatedTab";
+import CardList from "../CardList";
 
 import "./App.css";
 
@@ -24,8 +23,24 @@ export default class App extends Component {
   };
 
   componentDidMount() {
+    this.searchGenres();
     this.setGuestId();
   }
+
+  setSessionStorage = (genreList) => {
+    if ("genres" in sessionStorage) return;
+    const genres = { 0: "No genre" };
+    genreList.forEach((el) => {
+      genres[el.id.toString()] = el.name;
+    });
+    setToStorage("genres", genres);
+  };
+
+  searchGenres = () => {
+    this.movie.getGenres().then((body) => {
+      this.setSessionStorage(body.genres);
+    });
+  };
 
   onChangeTab = (activeTab) => {
     this.setState({ activeTab });
@@ -58,10 +73,10 @@ export default class App extends Component {
             size="large"
           >
             <TabPane tab="Search" key="Search">
-              <SearchTab guestId={guestId} activeTab={activeTab} />
+              <CardList guestId={guestId} activeTab={activeTab} />
             </TabPane>
             <TabPane tab="Rated" key="Rated">
-              <RatedTab guestId={guestId} activeTab={activeTab} />
+              <CardList guestId={guestId} activeTab={activeTab} />
             </TabPane>
           </Tabs>
         </div>

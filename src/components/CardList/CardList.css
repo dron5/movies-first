@@ -1,7 +1,7 @@
 body {
   background-color: #e5e5e5;
 }
-.search-tab {
+.card-list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -16,7 +16,7 @@ body {
   left: 420px;
 }
 @media screen and (max-width: 992px) {
-  .search-tab {
+  .card-list {
     width: 515px;
   }
   .ant-input {

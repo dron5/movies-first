@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import MovieService from "../../services/movieService";
 import { MovieServiceConsumer } from "../MovieServiceContext";
-import { setToStorage } from "../../services/utils";
 
 import AlertMessage from "../AlertMessage";
 import Card from "../Card";
@@ -10,9 +9,9 @@ import Spinner from "../Spinner";
 import Header from "../Header";
 import Footer from "../Footer";
 
-import "./SearchTab.css";
+import "./CardList.css";
 
-export default class SearchTab extends Component {
+export default class CardList extends Component {
   movie = new MovieService();
 
   state = {
@@ -26,7 +25,6 @@ export default class SearchTab extends Component {
 
   componentDidMount() {
     const { word } = this.state;
-    this.searchGenres();
     this.searchMovie(word);
   }
 
@@ -58,35 +56,18 @@ export default class SearchTab extends Component {
     });
   };
 
-  setSessionStorage = (genreList) => {
-    if ("genres" in sessionStorage) return;
-    const genres = { 0: "No genre" };
-    genreList.forEach((el) => {
-      genres[el.id.toString()] = el.name;
-    });
-    setToStorage("genres", genres);
-  };
-
-  searchGenres = () => {
-    this.movie.getGenres().then((body) => {
-      this.setSessionStorage(body.genres);
-    });
-  };
-
   searchMovie = (param, page = 1) => {
-    this.movie
-      .getMoviesList(param, page)
-      .then((body) => {
-        if (body.results.length === 0) {
-          throw new Error("По вашему запросу ничего не найдено!!!");
-        }
-        this.setState({
-          data: body.results,
-          loading: false,
-          error: false,
-          totalPages: body.total_pages,
-        });
+    this.movie.getMoviesList(param, page).then((body) => {
+      if (body.results.length === 0) {
+        throw new Error("По вашему запросу ничего не найдено!!!");
+      }
+      this.setState({
+        data: body.results,
+        loading: false,
+        error: false,
+        totalPages: body.total_pages,
       });
+    });
   };
 
   render() {
@@ -108,7 +89,6 @@ export default class SearchTab extends Component {
               overview={overview}
               date={date === undefined ? "" : date}
               posterUrl={posterUrl}
-              flag="MAIN"
             />
           )}
         </MovieServiceConsumer>
@@ -116,7 +96,7 @@ export default class SearchTab extends Component {
     });
 
     return (
-      <div className="search-tab">
+      <div className="card-list">
         <Header setWord={this.setWord} />
         {loading && <Spinner />}
         {error && <AlertMessage message={errMessage} />}

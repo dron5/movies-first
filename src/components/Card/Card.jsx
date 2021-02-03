@@ -23,21 +23,6 @@ export default class Card extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   const { flag } = this.props;
-  //   // if (flag === "RATED"){
-  //   // console.log("In Rated Card componentDidMount");
-  //   }
-  // }
-
-  // componentDidUpdate() {
-  //   const { title, flag } = this.props;
-  //   const { ratio } = this.state;
-  //   if (flag === "RATED"){
-  //   console.log("In Rated Card componentDidUpdate", title, ratio);
-  //   }
-  // }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.ratio !== nextProps.rating) {
       return {
@@ -58,7 +43,6 @@ export default class Card extends Component {
       guestId,
       vote,
       rating,
-      flag,
     } = this.props;
 
     const basePosterUrl = "http://image.tmdb.org/t/p/w185";
@@ -67,7 +51,6 @@ export default class Card extends Component {
       await this.movieService.rateMovie(num, id, guestId);
     };
     const { ratio } = this.state;
-    // if (flag === "RATED") console.log('inRender', ratio);
 
     return (
       <div className="card">
@@ -103,7 +86,6 @@ Card.defaultProps = {
   id: 0,
   guestId: "",
   rating: 0,
-  flag: '',
 };
 
 Card.propTypes = {
@@ -116,5 +98,4 @@ Card.propTypes = {
   guestId: PropTypes.string,
   vote: PropTypes.number.isRequired,
   rating: PropTypes.number,
-  flag: PropTypes.string,
 };

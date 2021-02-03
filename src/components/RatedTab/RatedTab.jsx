@@ -1,7 +1,7 @@
 /* eslint-disable react/no-did-update-set-state */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable */
+// /* eslint-disable */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -18,7 +18,7 @@ export default class RatedTab extends Component {
     super(props);
     this.state = {
       data: [],
-      totalPages: null,
+      totalPages: 0,
     };
   }
 
@@ -26,11 +26,12 @@ export default class RatedTab extends Component {
     this.getRated();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { activeTab } = this.props;
     // console.log(activeTab === "Rated" && prevProps.activeTab === "Rated");
-    if (activeTab === "Rated" && prevProps.activeTab !== "Rated")
+    if (activeTab === "Rated" && prevProps.activeTab !== "Rated") {
       this.getRated();
+    }
   }
 
   getRated = () => {
@@ -90,4 +91,5 @@ export default class RatedTab extends Component {
 
 RatedTab.propTypes = {
   guestId: PropTypes.string.isRequired,
+  activeTab: PropTypes.string.isRequired,
 };
