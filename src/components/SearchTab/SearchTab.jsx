@@ -10,9 +10,9 @@ import Spinner from "../Spinner";
 import Header from "../Header";
 import Footer from "../Footer";
 
-import "./Main.css";
+import "./SearchTab.css";
 
-export default class Main extends Component {
+export default class SearchTab extends Component {
   movie = new MovieService();
 
   state = {
@@ -116,7 +116,7 @@ export default class Main extends Component {
     });
 
     return (
-      <div className="main">
+      <div className="center">
         <Header setWord={this.setWord} />
         {loading && <Spinner />}
         {error && <AlertMessage message={errMessage} />}

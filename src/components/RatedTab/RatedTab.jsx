@@ -10,7 +10,7 @@ import { getFromStorage } from "../../services/utils";
 import Footer from "../Footer";
 import Card from "../Card";
 
-export default class Rated extends Component {
+export default class RatedTab extends Component {
   movie = new MovieService();
 
   constructor(props) {
@@ -77,7 +77,7 @@ export default class Rated extends Component {
       );
     });
     return (
-      <div className="main">
+      <div className="center">
         {elements}
         {totalPages > 2 && (
           <Footer totalPages={totalPages} showSizeChanger={false} />
@@ -87,6 +87,6 @@ export default class Rated extends Component {
   }
 }
 
-Rated.propTypes = {
+RatedTab.propTypes = {
   guestId: PropTypes.string.isRequired,
 };

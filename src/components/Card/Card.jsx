@@ -23,20 +23,20 @@ export default class Card extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   const { flag } = this.props;
-  //   if (flag === "RATED"){
-  //   console.log("In Card componentDidMount");
-  //   }
-  // }
+  componentDidMount() {
+    const { flag } = this.props;
+    if (flag === "RATED"){
+    console.log("In Rated Card componentDidMount");
+    }
+  }
 
-  // componentDidUpdate() {
-  //   const { rating, title, flag } = this.props;
-  //   const { ratio } = this.state;
-  //   if (flag === "RATED"){
-  //   console.log("In Card componentDidUpdate", rating, title, ratio);
-  //   }
-  // }
+  componentDidUpdate() {
+    const { rating, title, flag } = this.props;
+    const { ratio } = this.state;
+    if (flag === "RATED"){
+    console.log("In Rated Card componentDidUpdate", rating, title, ratio);
+    }
+  }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.ratio !== nextProps.rating) {
@@ -66,8 +66,8 @@ export default class Card extends Component {
     const onRateMovie = async (num) => {
       await this.movieService.rateMovie(num, id, guestId);
     };
-    // const { ratio } = this.state;
-    // if (flag === "RATED") console.log(ratio);
+    const { ratio } = this.state;
+    if (flag === "RATED") console.log(ratio);
     return (
       <div className="card">
         <div className="img">
@@ -87,7 +87,7 @@ export default class Card extends Component {
           <Rate
             allowHalf
             count={10}
-            defaultValue={rating}
+            defaultValue={ratio}
             onChange={onRateMovie}
           />
         </div>

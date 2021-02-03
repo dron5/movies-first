@@ -2,17 +2,17 @@
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable import/no-useless-path-segments */
 /* eslint-disable react/no-unused-state */
-import React, { Component, Fragment } from "react";
-
+// import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Tabs } from "antd";
 import MovieService from "../../services/MovieService";
 import { MovieServiceProvider } from "../MovieServiceContext";
 import { setToStorage, getFromStorage } from "../../services/utils";
 
-import Main from "../Main";
-import Rated from "../Rated";
+import SearchTab from "../SearchTab";
+import RatedTab from "../RatedTab";
 
-import "../../components/Main/Main.css";
+import "../../components/SearchTab/SearchTab.css";
 
 const { TabPane } = Tabs;
 
@@ -50,25 +50,23 @@ export default class App extends Component {
   render() {
     const { guestId, activeTab } = this.state;
     return (
-      <div className="main">
-        <Fragment>
-          <MovieServiceProvider value={guestId}>
-            <Tabs
-              defaultActiveKey="Search"
-              centered
-              onChange={this.onChangeTab}
-              size="large"
-            >
-              <TabPane tab="Search" key="Search">
-                <Main activeTab={activeTab} />
-              </TabPane>
-              <TabPane tab="Rated" key="Rated">
-                <Rated guestId={guestId} activeTab={activeTab} />
-              </TabPane>
-            </Tabs>
-          </MovieServiceProvider>
-        </Fragment>
-      </div>
+      <MovieServiceProvider value={guestId}>
+        <div className="center">
+          <Tabs
+            defaultActiveKey="Search"
+            centered
+            onChange={this.onChangeTab}
+            size="large"
+          >
+            <TabPane tab="Search" key="Search">
+              <SearchTab guestId={guestId} activeTab={activeTab} />
+            </TabPane>
+            <TabPane tab="Rated" key="Rated">
+              <RatedTab guestId={guestId} activeTab={activeTab} />
+            </TabPane>
+          </Tabs>
+        </div>
+      </MovieServiceProvider>
     );
   }
 }
