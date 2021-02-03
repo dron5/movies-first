@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import MovieService from "../../services/MovieService";
+import MovieService from "../../services/movieService";
 import { MovieServiceConsumer } from "../MovieServiceContext";
 import { setToStorage } from "../../services/utils";
 

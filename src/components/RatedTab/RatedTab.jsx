@@ -5,7 +5,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import MovieService from "../../services/MovieService";
+import MovieService from "../../services/movieService";
 import { getFromStorage } from "../../services/utils";
 import Footer from "../Footer";
 import Card from "../Card";

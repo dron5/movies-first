@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { format } from "date-fns";
 import { Rate } from "antd";
 
-import MovieService from "../../services/MovieService";
+import MovieService from "../../services/movieService";
 import { voteClassSetter } from "../../services/utils";
 import Genres from "../Genres";
 
@@ -90,6 +90,7 @@ export default class Card extends Component {
             count={10}
             defaultValue={ratio}
             onChange={onRateMovie}
+            className="card__stars"
           />
         </div>
       </div>

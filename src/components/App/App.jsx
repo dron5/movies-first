@@ -2,10 +2,9 @@
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable import/no-useless-path-segments */
 /* eslint-disable react/no-unused-state */
-// import React, { Component, Fragment } from "react";
 import React, { Component } from "react";
 import { Tabs } from "antd";
-import MovieService from "../../services/MovieService";
+import MovieService from "../../services/movieService";
 import { MovieServiceProvider } from "../MovieServiceContext";
 import { setToStorage, getFromStorage } from "../../services/utils";
 
