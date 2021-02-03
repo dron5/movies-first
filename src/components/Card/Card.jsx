@@ -31,10 +31,10 @@ export default class Card extends Component {
   // }
 
   // componentDidUpdate() {
-  //   const { rating, title, flag } = this.props;
+  //   const { title, flag } = this.props;
   //   const { ratio } = this.state;
   //   if (flag === "RATED"){
-  //   console.log("In Rated Card componentDidUpdate", rating, title, ratio);
+  //   console.log("In Rated Card componentDidUpdate", title, ratio);
   //   }
   // }
 
@@ -67,18 +67,19 @@ export default class Card extends Component {
       await this.movieService.rateMovie(num, id, guestId);
     };
     const { ratio } = this.state;
-    if (flag === "RATED") console.log(ratio);
+    // if (flag === "RATED") console.log('inRender', ratio);
+
     return (
       <div className="card">
-        <div className="img">
+        <div className="card__img">
           <img
             src={posterUrl ? `${basePosterUrl}${posterUrl}` : noposter}
             alt="poster"
           />
         </div>
-        <div className="content">
-          <div className="card_header">
-            <div className="title">{title}</div>
+        <div className="card__content">
+          <div className="card__header">
+            <div className="card__title">{title}</div>
             <div className={className}>{vote}</div>
           </div>
           <div>{date ? format(new Date(date), "PP") : "not release date"}</div>

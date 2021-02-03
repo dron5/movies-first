@@ -9,6 +9,7 @@ import MovieService from "../../services/MovieService";
 import { getFromStorage } from "../../services/utils";
 import Footer from "../Footer";
 import Card from "../Card";
+import "./RatedTab.css";
 
 export default class RatedTab extends Component {
   movie = new MovieService();
@@ -77,7 +78,7 @@ export default class RatedTab extends Component {
       );
     });
     return (
-      <div className="center">
+      <div className="rated-tab">
         {elements}
         {totalPages > 2 && (
           <Footer totalPages={totalPages} showSizeChanger={false} />

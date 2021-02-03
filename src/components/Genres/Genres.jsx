@@ -8,11 +8,11 @@ const Genres = ({ genre }) => {
   let genres = sessionStorage.getItem("genres");
   genres = JSON.parse(genres);
   const part = genre.map((el, i) => (
-    <button key={i} type="button" className="genres">
+    <button key={i} type="button" className="card__genres">
       {genres[el]}
     </button>
   ));
-  return <div className="genre">{part}</div>;
+  return <div className="card__genre">{part}</div>;
 };
 
 Genres.defaultProps = {

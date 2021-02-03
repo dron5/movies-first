@@ -116,7 +116,7 @@ export default class SearchTab extends Component {
     });
 
     return (
-      <div className="center">
+      <div className="search-tab">
         <Header setWord={this.setWord} />
         {loading && <Spinner />}
         {error && <AlertMessage message={errMessage} />}

@@ -1,7 +1,7 @@
 body {
   background-color: #e5e5e5;
 }
-.center {
+.search-tab {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -16,7 +16,7 @@ body {
   left: 420px;
 }
 @media screen and (max-width: 992px) {
-  .center {
+  .search-tab {
     width: 515px;
   }
   .ant-input {

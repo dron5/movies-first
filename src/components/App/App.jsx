@@ -12,7 +12,7 @@ import { setToStorage, getFromStorage } from "../../services/utils";
 import SearchTab from "../SearchTab";
 import RatedTab from "../RatedTab";
 
-import "../../components/SearchTab/SearchTab.css";
+import "./App.css";
 
 const { TabPane } = Tabs;
 
@@ -51,7 +51,7 @@ export default class App extends Component {
     const { guestId, activeTab } = this.state;
     return (
       <MovieServiceProvider value={guestId}>
-        <div className="center">
+        <div className="app">
           <Tabs
             defaultActiveKey="Search"
             centered

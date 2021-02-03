@@ -5,3 +5,13 @@
   margin: 0 auto;
   background-color: #fff;
 }
+.spinner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  width: 1000px;
+  height: auto;
+  background-color: #fff;
+  margin: 0 auto;
+}

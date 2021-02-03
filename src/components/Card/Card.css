@@ -15,18 +15,18 @@
   margin-left: 30px;
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 245, 0.2);
 }
-.card_header {
+.card__header {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: flex-start;
 }
-.img {
+.card__img {
   width: 185px;
   height: 100%;
 }
-.content {
+.card__content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -36,7 +36,7 @@
   padding-right: 8px;
   box-sizing: border-box;
 }
-.content p {
+.card__content p {
   font-family: Inter;
   font-weight: 300;
   font-size: 14px;
@@ -47,7 +47,7 @@
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
 }
-.title {
+.card__title {
   font-family: Inter;
   max-width: 222px;
   min-width: 222px;
@@ -61,14 +61,14 @@
   margin-bottom: 5px;
   margin-right: auto;
 }
-.genre {
+.card__genre {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.firstColor,
-.secondColor,
-.thirdColor,
-.fourthColor {
+.red,
+.orange,
+.yellow,
+.green {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,13 +77,13 @@
   border: 2px solid #66e900;
   border-radius: 15px;
 }
-.firstColor {
+.red {
   border: 2px solid #e90000;
 }
-.secondColor {
+.orange {
   border: 2px solid #e97e00;
 }
-.thirdColor {
+.yellow {
   border: 2px solid #e9d100;
 }
 .ant-rate {
