@@ -20,7 +20,7 @@ export default class App extends Component {
   state = {
     guestId: "",
     activeTab: "Search",
-    data: [], // убирать отсюда
+    data: [],
     loading: true,
     error: false,
     errMessage: "",

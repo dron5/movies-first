@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import { format } from "date-fns";
@@ -12,11 +11,9 @@ import Genres from "../Genres";
 import "./Card.css";
 import noposter from "./no-poster.jpg";
 
-export default class Card extends Component {
-  movieService = new MovieService();
+const { rateMovie } = MovieService;
 
-  render() {
-    const {
+const Card = ({
       title,
       overview,
       date,
@@ -26,12 +23,12 @@ export default class Card extends Component {
       guestId,
       vote,
       rating,
-    } = this.props;
+    }) => {
 
     const basePosterUrl = "http://image.tmdb.org/t/p/w185";
     const className = voteClassSetter(vote);
     const onRateMovie = async (num) => {
-      await this.movieService.rateMovie(num, id, guestId);
+      await rateMovie(num, id, guestId);
     };
 
     return (
@@ -60,8 +57,7 @@ export default class Card extends Component {
         </div>
       </div>
     );
-  }
-}
+  };
 
 Card.defaultProps = {
   genre: [0],
@@ -81,3 +77,4 @@ Card.propTypes = {
   vote: PropTypes.number.isRequired,
   rating: PropTypes.number,
 };
+export default Card;
