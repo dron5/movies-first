@@ -1,39 +1,19 @@
-/* eslint-disable */
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import { format } from "date-fns";
 import { Rate } from "antd";
 
-import MovieService from "../../services/movieService";
+import MovieService from "../../services/MovieService";
 import { voteClassSetter } from "../../services/utils";
 import Genres from "../Genres";
 
 import "./Card.css";
 import noposter from "./no-poster.jpg";
 
-export default class Card extends Component {
-  movieService = new MovieService();
+const movie = new MovieService();
 
-  constructor(props) {
-    super(props);
-    const { rating } = this.props;
-    this.state = {
-      ratio: rating,
-    };
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.ratio !== nextProps.rating) {
-      return {
-        ratio: nextProps.rating,
-      };
-    }
-    return null;
-  }
-
-  render() {
-    const {
+const Card = ({
       title,
       overview,
       date,
@@ -43,14 +23,13 @@ export default class Card extends Component {
       guestId,
       vote,
       rating,
-    } = this.props;
+    }) => {
 
     const basePosterUrl = "http://image.tmdb.org/t/p/w185";
     const className = voteClassSetter(vote);
     const onRateMovie = async (num) => {
-      await this.movieService.rateMovie(num, id, guestId);
+      await movie.rateMovie(num, id, guestId);
     };
-    const { ratio } = this.state;
 
     return (
       <div className="card">
@@ -71,15 +50,14 @@ export default class Card extends Component {
           <Rate
             allowHalf
             count={10}
-            defaultValue={ratio}
+            defaultValue={rating}
             onChange={onRateMovie}
             className="card__stars"
           />
         </div>
       </div>
     );
-  }
-}
+  };
 
 Card.defaultProps = {
   genre: [0],
@@ -99,3 +77,4 @@ Card.propTypes = {
   vote: PropTypes.number.isRequired,
   rating: PropTypes.number,
 };
+export default Card;
