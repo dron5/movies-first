@@ -36,8 +36,15 @@ export default class App extends Component {
     this.searchMovie(word);
   }
 
-  componentDidUpdate() {
-
+  componentDidUpdate(prevProps, prevState) {
+    const { word, page, activeTab } = this.state;
+    if ((page !== prevState.page || word !== prevState.word) || (
+      activeTab === 'Seacrch' && prevState.activeTab !== 'Search')) {
+      this.searchMovie({word, page});
+    }
+    if (activeTab === 'Rated' && prevState.activeTab !== 'Rated') {
+      this.getRated();
+    }
   }
 
   setSessionStorage = (genreList) => {

@@ -11,7 +11,7 @@ import Genres from "../Genres";
 import "./Card.css";
 import noposter from "./no-poster.jpg";
 
-const { rateMovie } = MovieService;
+const movie = new MovieService();
 
 const Card = ({
       title,
@@ -28,7 +28,7 @@ const Card = ({
     const basePosterUrl = "http://image.tmdb.org/t/p/w185";
     const className = voteClassSetter(vote);
     const onRateMovie = async (num) => {
-      await rateMovie(num, id, guestId);
+      await movie.rateMovie(num, id, guestId);
     };
 
     return (
