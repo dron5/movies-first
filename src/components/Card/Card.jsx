@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { format } from "date-fns";
 import { Rate } from "antd";
 
-import MovieService from "../../services/movieService";
+import MovieService from "../../services/MovieService";
 import { voteClassSetter } from "../../services/utils";
 import Genres from "../Genres";
 
@@ -14,23 +14,6 @@ import noposter from "./no-poster.jpg";
 
 export default class Card extends Component {
   movieService = new MovieService();
-
-  constructor(props) {
-    super(props);
-    const { rating } = this.props;
-    this.state = {
-      ratio: rating,
-    };
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.ratio !== nextProps.rating) {
-      return {
-        ratio: nextProps.rating,
-      };
-    }
-    return null;
-  }
 
   render() {
     const {
@@ -50,7 +33,6 @@ export default class Card extends Component {
     const onRateMovie = async (num) => {
       await this.movieService.rateMovie(num, id, guestId);
     };
-    const { ratio } = this.state;
 
     return (
       <div className="card">
@@ -71,7 +53,7 @@ export default class Card extends Component {
           <Rate
             allowHalf
             count={10}
-            defaultValue={ratio}
+            defaultValue={rating}
             onChange={onRateMovie}
             className="card__stars"
           />
