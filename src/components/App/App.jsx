@@ -32,19 +32,33 @@ export default class App extends Component {
   componentDidMount() {
     this.searchGenres();
     this.setGuestId();
-    const { word } = this.state;
+    const { word, activeTab } = this.state;
     this.searchMovie(word);
+    setToStorage('prevTab', 'Search');
+    setToStorage('currentTab', 'Search');
+    console.log('inDidMount', activeTab);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { word, page, activeTab } = this.state;
-    if ((page !== prevState.page || word !== prevState.word) || (
-      activeTab === 'Seacrch' && prevState.activeTab !== 'Search')) {
-      this.searchMovie({word, page});
-    }
-    if (activeTab === 'Rated' && prevState.activeTab !== 'Rated') {
+  componentDidUpdate() {
+    const currentTab = getFromStorage('currentTab');
+    const prevTab = getFromStorage('prevTab');
+
+    if (currentTab === 'Rated' && prevTab === 'Search') {
+      this.forceUpdate();
       this.getRated();
+      console.log('currentTab ', currentTab);
+      setToStorage('prevTab', 'Rated');
     }
+
+    if (currentTab === 'Search' && prevTab === 'Rated') {
+      this.forceUpdate();
+      this.searchMovie('return');
+      console.log('currentTab ', currentTab);
+      setToStorage('prevTab', 'Search');
+    }
+    
+    const { activeTab } = this.state;
+    console.log('inDidUpdate', activeTab);
   }
 
   setSessionStorage = (genreList) => {
@@ -64,6 +78,9 @@ export default class App extends Component {
 
   onChangeTab = (activeTab) => {
     this.setState({ activeTab });
+    activeTab === 'Search' ? 
+    setToStorage('currentTab', 'Search') :
+    setToStorage('currentTab', 'Rated');
   };
 
   setGuestId = () => {
@@ -106,7 +123,7 @@ export default class App extends Component {
     });
   };
 
-  searchMovie = (param, page = 1) => {
+  searchMovie = (param = 'return', page = 1) => {
     this.movie.getMoviesList(param, page).then((body) => {
       if (body.results.length === 0) {
         throw new Error("По вашему запросу ничего не найдено!!!");
@@ -117,7 +134,8 @@ export default class App extends Component {
         error: false,
         totalPages: body.total_pages,
       });
-    });
+    })
+      .catch(error=>this.onError(error.message));
   };
 
   setWord = (name) => {
@@ -149,6 +167,7 @@ export default class App extends Component {
       guestId, errMessage, totalPages, error,
       loading, data, activeTab,
     } = this.state;
+    console.log('inRender', activeTab);
     return (
       <MovieServiceProvider value={guestId}>
         <div className="app">

@@ -19,6 +19,7 @@ const CardList = ({
     const { id, title, overview, date, img, genre, vote, rating } = item;
     let posterUrl = "";
     if (img) posterUrl = img;
+    
     return (
       <MovieServiceConsumer key={id}>
         {(guestId) => (

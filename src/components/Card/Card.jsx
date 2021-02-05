@@ -27,6 +27,7 @@ const Card = ({
 
     const basePosterUrl = "http://image.tmdb.org/t/p/w185";
     const className = voteClassSetter(vote);
+    console.log(rating, title);
     const onRateMovie = async (num) => {
       await movie.rateMovie(num, id, guestId);
     };
