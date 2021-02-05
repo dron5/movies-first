@@ -44,14 +44,14 @@ export default class App extends Component {
     const prevTab = getFromStorage('prevTab');
 
     if (currentTab === 'Rated' && prevTab === 'Search') {
-      this.forceUpdate();
+      this.setState({ data: [] });
       this.getRated();
       console.log('currentTab ', currentTab);
       setToStorage('prevTab', 'Rated');
     }
 
     if (currentTab === 'Search' && prevTab === 'Rated') {
-      this.forceUpdate();
+      this.setState({ data: [] });
       this.searchMovie('return');
       console.log('currentTab ', currentTab);
       setToStorage('prevTab', 'Search');
@@ -59,6 +59,10 @@ export default class App extends Component {
     
     const { activeTab } = this.state;
     console.log('inDidUpdate', activeTab);
+  }
+
+  componentWillUnmount() {
+    console.log('inWillUnMount');
   }
 
   setSessionStorage = (genreList) => {
