@@ -55,13 +55,13 @@ export default class App extends Component {
     const currentTab = getFromStorage('currentTab');
     const prevTab = getFromStorage('prevTab');
     if (currentTab === 'Rated' && prevTab === 'Search') {
-      this.setState({ data: [] }); // !
+      this.setState({ data: [], loading: true }); // !
       this.getRated();
       setToStorage('prevTab', 'Rated');
     }
 
     if (currentTab === 'Search' && prevTab === 'Rated') {
-      this.setState({ data: [] }); // !
+      this.setState({ data: [], loading: true }); // !
       this.searchMovie('return');
       setToStorage('prevTab', 'Search');
     }
@@ -98,6 +98,7 @@ export default class App extends Component {
               <CardList
                 guestId={guestId}
                 data={data}
+                loading={loading}
                 activeTab={activeTab}
                 error={error}
               />
