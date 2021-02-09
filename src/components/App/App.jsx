@@ -1,12 +1,13 @@
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/jsx-fragments */
-/* eslint-disable import/no-useless-path-segments */
 /* eslint-disable react/no-did-update-set-state */
 import React, { Component } from "react";
 import { Tabs } from "antd";
 import MovieService from "../../services/MovieService";
 import { MovieServiceProvider } from "../MovieServiceContext";
-import { setToStorage, getFromStorage } from "../../services/utils";
+import {
+  setToStorage, getFromStorage, setGuestId, searchMovie, setSessionStorage,
+  onChangeTab, setWord, setPage, onError, searchGenres, getRated
+} from "../../services/utils";
 
 import CardList from "../CardList";
 
@@ -17,6 +18,19 @@ const { TabPane } = Tabs;
 export default class App extends Component {
   movie = new MovieService();
 
+  constructor(props) {
+    super(props);
+    this.onChangeTab = onChangeTab.bind(this);
+    this.setWord = setWord.bind(this);
+    this.setPage = setPage.bind(this);
+    this.setGuestId = setGuestId.bind(this);
+    this.onError = onError.bind(this);
+    this.searchGenres = searchGenres.bind(this);
+    this.searchMovie = searchMovie.bind(this);
+    this.getRated = getRated.bind(this);
+    this.setSessionStorage = setSessionStorage.bind(this);
+  }
+
   state = {
     guestId: "",
     activeTab: "Search",
@@ -26,7 +40,6 @@ export default class App extends Component {
     errMessage: "",
     totalPages: 0,
     word: "return",
-    // page: 1,
   };
 
   componentDidMount() {
@@ -53,113 +66,6 @@ export default class App extends Component {
       setToStorage('prevTab', 'Search');
     }
   }
-
-  setSessionStorage = (genreList) => {
-    if ("genres" in sessionStorage) return;
-    const genres = { 0: "No genre" };
-    genreList.forEach((el) => {
-      genres[el.id.toString()] = el.name;
-    });
-    setToStorage("genres", genres);
-  };
-
-  searchGenres = () => {
-    this.movie.getGenres().then((body) => {
-      this.setSessionStorage(body.genres);
-    });
-  };
-
-  onChangeTab = (activeTab) => {
-    this.setState({ activeTab });
-    if (activeTab === 'Search') {
-      setToStorage('currentTab', 'Search');
-    }else setToStorage('currentTab', 'Rated');
-  };
-
-  setGuestId = () => {
-    if (getFromStorage("guestId") === null) {
-      this.movie.getSessionId().then((body) => {
-        this.setState({
-          guestId: body.guest_session_id,
-        });
-        setToStorage("guestId", body.guest_session_id);
-      });
-    } else {
-      this.setState({
-        guestId: getFromStorage("guestId"),
-      });
-    }
-  };
-
-  getRated = () => {
-    const guestId = getFromStorage("guestId");
-    this.movie.getRatedMovies(guestId)
-      .then(result => {
-      this.setState({
-            data: result.results,
-            totalPages: result.totalPages,
-            loading: false,
-            error: false,
-          });
-        });
-  };
-
-  searchMovie = (param = 'return', page = 1) => {
-    const guestId = getFromStorage("guestId");
-    this.movie.getMoviesList(param, page).then((movies) => {
-      if (movies.results.length === 0) {
-        throw new Error("По вашему запросу ничего не найдено!!!");
-      };
-      return movies;
-    })
-      .then(movies => {
-        this.movie.getRatedMovies(guestId)
-          .then(rated => {
-            
-            const dataMovies = movies.results.reduce((acc, elem) => {
-              let movie = elem;
-              rated.results.forEach((el)=>{
-                if (el.id === movie.id){
-                  movie = el;
-                }
-              });
-              acc.push(movie);
-              return acc;
-            }, []);
-            this.setState({
-              data: dataMovies,
-              loading: false,
-              error: false,
-              totalPages: movies.total_pages,
-            });
-          });
-      })
-      .catch (error=> this.onError(error.message));
-  };
-
-  setWord = (name) => {
-    const word = name.trim();
-    if (!word) return;
-    this.setState({
-      word,
-    });
-    this.searchMovie(word);
-  };
-
-  setPage = (page) => {
-    const { word } = this.state;
-    this.searchMovie(word, page);
-    // this.setState({page});
-  };
-
-  onError = (message) => {
-    this.setState({
-      error: true,
-      errMessage: message,
-      loading: false,
-      totalPages: 0,
-    });
-  };
 
   render() {
     const {

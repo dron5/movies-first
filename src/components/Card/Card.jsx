@@ -9,7 +9,7 @@ import { voteClassSetter } from "../../services/utils";
 import Genres from "../Genres";
 
 import "./Card.css";
-import noposter from "./no-poster.jpg";
+import noposter from "../../img/no-poster.jpg";
 
 const movie = new MovieService();
 

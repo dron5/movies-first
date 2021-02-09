@@ -17,8 +17,6 @@ const CardList = ({
 }) => {
   const elements = data.map((item) => {
     const { id, title, overview, date, img, genre, vote, rating } = item;
-    let posterUrl = "";
-    if (img) posterUrl = img;
     
     return (
       <MovieServiceConsumer key={id}>
@@ -32,7 +30,7 @@ const CardList = ({
             genre={genre}
             overview={overview}
             date={date === undefined ? "" : date}
-            posterUrl={posterUrl}
+            posterUrl={img || ""}
             activeTab={activeTab}
           />
         )}

@@ -49,18 +49,20 @@ export default class MovieService {
 
   getMovieParam(movies) {
     const moviesData = [];
-    movies.results.forEach((el) => {
-      moviesData.push({
-        id: el.id,
-        title: el.title,
-        img: el.poster_path,
-        overview: el.overview,
-        genre: el.genre_ids,
-        date: el.release_date,
-        vote: el.vote_average,
-        rating: el.rating,
+    if (movies.results) {
+      movies.results.forEach((el) => {
+        moviesData.push({
+          id: el.id,
+          title: el.title,
+          img: el.poster_path,
+          overview: el.overview,
+          genre: el.genre_ids,
+          date: el.release_date,
+          vote: el.vote_average,
+          rating: el.rating,
+        });
       });
-    });
+    }
     const data = {
       results: moviesData,
       total_pages: movies.total_pages,

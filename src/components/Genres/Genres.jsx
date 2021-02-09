@@ -1,12 +1,12 @@
 /* eslint-disable react/no-array-index-key */
 import React from "react";
 import PropTypes from "prop-types";
+import { getFromStorage } from "../../services/utils";
 
 import "./Genres.css";
 
 const Genres = ({ genre }) => {
-  let genres = sessionStorage.getItem("genres");
-  genres = JSON.parse(genres);
+  const genres = getFromStorage('genres');
   const part = genre.map((el, i) => (
     <button key={i} type="button" className="card__genres">
       {genres[el]}
