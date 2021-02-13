@@ -15,64 +15,64 @@ const getFromStorage = (paramName) =>
   JSON.parse(sessionStorage.getItem(paramName));
 
 function setSessionStorage(genreList) {
-    if ("genres" in sessionStorage) return;
-    const genres = { 0: "No genre" };
-    genreList.forEach((el) => {
-      genres[el.id.toString()] = el.name;
-    });
-    setToStorage("genres", genres);
-  };
+  if ("genres" in sessionStorage) return;
+  const genres = { 0: "No genre" };
+  genreList.forEach((el) => {
+    genres[el.id.toString()] = el.name;
+  });
+  setToStorage("genres", genres);
+};
 
 function searchGenres() {
-    this.movie.getGenres().then((body) => {
-      this.setSessionStorage(body.genres);
-    });
-  };
+  this.movie.getGenres().then((body) => {
+    this.setSessionStorage(body.genres);
+  });
+};
 
 function onChangeTab(activeTab) {
-    this.setState({ activeTab });
-    if (activeTab === 'Search') {
-      setToStorage('currentTab', 'Search');
-    }else setToStorage('currentTab', 'Rated');
-  };
+  this.setState({ activeTab });
+  if (activeTab === 'Search') {
+    setToStorage('currentTab', 'Search');
+  }else setToStorage('currentTab', 'Rated');
+};
 
 function setWord (name) {
-    const word = name.trim();
-    if (!word) return;
-    this.setState({
-      word,
-    });
-    this.searchMovie(word);
-  };
+  const word = name.trim();
+  if (!word) return;
+  this.setState({
+    word,
+  });
+  this.searchMovie(word);
+};
 
 function setPage(page) {
-    const { word } = this.state;
-    this.searchMovie(word, page);
-  };
+  const { word } = this.state;
+  this.searchMovie(word, page);
+};
 
 function onError(message) {
-    this.setState({
-      error: true,
-      errMessage: message,
-      loading: false,
-      totalPages: 0,
-    });
-  }; 
+  this.setState({
+    error: true,
+    errMessage: message,
+    loading: false,
+    totalPages: 0,
+  });
+}; 
 
 function setGuestId() {
-    if (getFromStorage("guestId") === null) {
-      this.movie.getSessionId().then((body) => {
-        this.setState({
-          guestId: body.guest_session_id,
-        });
-        setToStorage("guestId", body.guest_session_id);
-      });
-    } else {
+  if (getFromStorage("guestId") === null) {
+    this.movie.getSessionId().then((body) => {
       this.setState({
-        guestId: getFromStorage("guestId"),
+        guestId: body.guest_session_id,
       });
-    }
-  };
+      setToStorage("guestId", body.guest_session_id);
+    });
+  } else {
+    this.setState({
+      guestId: getFromStorage("guestId"),
+    });
+  }
+};
 
 async function getRated() {
   const guestId = getFromStorage("guestId");
@@ -83,7 +83,7 @@ async function getRated() {
         loading: false,
         error: false,
       });
-  };
+};
 
 async function searchMovie(param = 'return', page = 1) {
   const movies = await this.movie.getMoviesList({ param, page }).then((movie) => {
@@ -105,7 +105,7 @@ async function searchMovie(param = 'return', page = 1) {
     error: false,
     totalPages: movies.total_pages,
   });
-  };
+};
 
 export {
   voteClassSetter,  setToStorage, searchGenres,

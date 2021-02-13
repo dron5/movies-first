@@ -60,7 +60,6 @@ export default class App extends Component {
       this.getRated();
       setToStorage('prevTab', 'Rated');
     }
-
     if (currentTab === 'Search' && prevTab === 'Rated') {
       this.setState({ data: [], loading: true }); // !
       this.searchMovie();
