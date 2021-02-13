@@ -74,50 +74,37 @@ function setGuestId() {
     }
   };
 
-function getRated() {
-    const guestId = getFromStorage("guestId");
-    this.movie.getRatedMovies(guestId)
-      .then(result => {
-      this.setState({
-            data: result.results,
-            totalPages: result.totalPages,
-            loading: false,
-            error: false,
-          });
-        });
+async function getRated() {
+  const guestId = getFromStorage("guestId");
+  const result = await this.movie.getRatedMovies({ guestId });
+  this.setState({
+        data: result.results,
+        totalPages: result.totalPages,
+        loading: false,
+        error: false,
+      });
   };
 
-
-function searchMovie(param = 'return', page = 1) {
-    const guestId = getFromStorage("guestId");
-    this.movie.getMoviesList(param, page).then((movies) => {
-      if (movies.results.length === 0) {
+async function searchMovie(param = 'return', page = 1) {
+  const movies = await this.movie.getMoviesList({ param, page }).then((movie) => {
+      if (movie.results.length === 0) {
         throw new Error("По вашему запросу ничего не найдено!!!");
       };
-      return movies;
-    })
-      .then(movies => {
-        this.movie.getRatedMovies(guestId)
-          .then(rated => {
-            const dataMovies = movies.results.reduce((acc, elem) => {
-              let movie = elem;
-              rated.results.forEach((el)=>{
-                if (el.id === movie.id){
-                  movie = el;
-                }
-              });
-              acc.push(movie);
-              return acc;
-            }, []);
-            this.setState({
-              data: dataMovies,
-              loading: false,
-              error: false,
-              totalPages: movies.total_pages,
-            });
-          });
-      })
-      .catch (error=> this.onError(error.message));
+      return movie;
+    }).catch (error=> this.onError(error.message));
+  const rated = await this.movie.getRatedMovies();        
+  const dataMovies = movies.results.reduce((acc, elem) => {
+    let movie = elem;
+    rated.results.forEach((el)=>{movie = el.id === movie.id ? el : movie;});
+    acc.push(movie);
+    return acc;
+  }, []);
+  this.setState({
+    data: dataMovies,
+    loading: false,
+    error: false,
+    totalPages: movies.total_pages,
+  });
   };
 
 export {

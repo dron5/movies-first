@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-did-update-set-state */
 import React, { Component } from "react";
@@ -43,8 +44,8 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    this.searchGenres();
     this.setGuestId();
+    this.searchGenres();
     const { word } = this.state;
     this.searchMovie(word);
     setToStorage('prevTab', 'Search');
@@ -62,7 +63,7 @@ export default class App extends Component {
 
     if (currentTab === 'Search' && prevTab === 'Rated') {
       this.setState({ data: [], loading: true }); // !
-      this.searchMovie('return');
+      this.searchMovie();
       setToStorage('prevTab', 'Search');
     }
   }

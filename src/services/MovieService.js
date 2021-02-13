@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-return-await */
 /* eslint-disable no-underscore-dangle */
 export default class MovieService {
@@ -12,39 +13,43 @@ export default class MovieService {
   _getGuestSessionId = "authentication/guest_session/new?";
 
   rateMovie = async (voteNum, movieId, GSId) => {
-    let json = { value: voteNum };
-    json = JSON.stringify(json);
+    let body = { value: voteNum };
+    body = JSON.stringify(body);
     await fetch(
       `${this._apiBase}movie/${movieId}/rating?${this._apiKey}&guest_session_id=${GSId}`,
       {
         method: "post",
         headers: {
-          "Content-Type": "application/json; charset=utf-8",
+          "Content-Type": "application/json; charset=utf-8"
         },
-        body: json,
+        body
       }
     );
   };
 
   async getSessionId() {
-    const answer = await fetch(
+    const answer = await this.baseRequest(
       `${this._apiBase}${this._getGuestSessionId}${this._apiKey}`
     ).catch(() => {
       throw new Error("Not sessionId cos Fucking error");
     });
-    return await answer.json();
+    return answer;
   }
 
-  async baseRequest(apiName, params = "") {
-    const answer = await fetch(
-      `https://api.themoviedb.org/3/${apiName}${this._apiKey}${params}`
+   async baseRequest(url, method="GET") {
+     const answer = await fetch(url, {
+       method,
+       headers: {
+         "Content-Type": "application/json;charset=utf-8"
+       }
+     }      
     );
     if (!answer.ok) {
       throw new Error(
-        `Could not fetch... ${apiName}, received ${answer.status}`
+        `Could not fetch... ${url}, received ${answer.status}`
       );
     }
-    return await answer.json();
+    return answer.json();
   }
 
   getMovieParam(movies) {
@@ -72,22 +77,28 @@ export default class MovieService {
   }
 
   async getGenres() {
-    const genres = await this.baseRequest("genre/movie/list?");
+    const genres = await this.baseRequest(
+      // "https://api.themoviedb.org/3/genre/movie/list?api_key=28b85740a1eab5e0a5b2afffc6bc4915"
+      `${this._apiBase}genre/movie/list?${this._apiKey}`
+    );
     return genres;
   }
-
-  async getRatedMovies(id) {
-    const ratedsMovies = await fetch(
-      `${this._apiBase}guest_session/${id}/rated/movies?${this._apiKey}`
+  
+  async getRatedMovies() {
+    if (!("guestId" in sessionStorage)) {
+      await this.getSessionId();
+    }
+    const guestId = JSON.parse(sessionStorage.getItem('guestId')); 
+    const ratedsMovies = await this.baseRequest(
+      `${this._apiBase}guest_session/${guestId}/rated/movies?${this._apiKey}`
     );
-    const rateds = await ratedsMovies.json();
-    return this.getMovieParam(rateds);
+    return this.getMovieParam(ratedsMovies);
   }
 
-  async getMoviesList(param, page = 1) {
+  async getMoviesList(args) {
+    const { param, page } = args;
     const movies = await this.baseRequest(
-      this._apiSearch,
-      `&query=${param}&page=${page}`
+      `${this._apiBase}${this._apiSearch}${this._apiKey}&query=${param}&page=${page}`
     );
     return this.getMovieParam(movies);
   }
