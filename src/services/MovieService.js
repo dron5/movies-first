@@ -12,19 +12,14 @@ export default class MovieService {
 
   _getGuestSessionId = "authentication/guest_session/new?";
 
-  rateMovie = async (voteNum, movieId, GSId) => {
-    let body = { value: voteNum };
+  rateMovie = async (args) => {
+    const { num, id, guestId } = args;
+    let body = { value: num };
     body = JSON.stringify(body);
-    await fetch(
-      `${this._apiBase}movie/${movieId}/rating?${this._apiKey}&guest_session_id=${GSId}`,
-      {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8"
-        },
-        body
-      }
-    );
+    await this.baseRequest(
+      `${this._apiBase}movie/${id}/rating?${this._apiKey}&guest_session_id=${guestId}`,
+      'POST',
+      body);
   };
 
   async getSessionId() {
@@ -36,12 +31,13 @@ export default class MovieService {
     return answer;
   }
 
-   async baseRequest(url, method="GET") {
+   async baseRequest(url, method="GET", body) {
      const answer = await fetch(url, {
        method,
        headers: {
          "Content-Type": "application/json;charset=utf-8"
-       }
+       },
+       body
      }      
     );
     if (!answer.ok) {
